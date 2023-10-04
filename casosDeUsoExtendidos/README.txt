@@ -4,7 +4,7 @@ Como ejemplo, '0comienzo' está terminado, corresponde al actor 'cualquiera' que
 
 Reparto de tareas:
 1- Gestión de reservas: SERGIO LUSA
-2- Reseñas: JON MARCOS
+2- Reseñas: JON 
 3- Red de amigos: ADRIMR07
 4- Administrador: ANDER
 5- Foros: ENEKO
