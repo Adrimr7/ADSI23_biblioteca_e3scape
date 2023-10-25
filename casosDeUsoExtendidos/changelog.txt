@@ -1,4 +1,7 @@
 25/10/2023
 El foro ya no funciona de la misma manera. Ahora en el foro solo se puede responder al tema, no responder a un comentario.
 
-En el punto 3.5 (Foro), uno de los diagramas está actualizado. 
+Actualizada la jerarquía de actores.
+Actualizados los diagramas del modelo de casos de uso.
+Actualizado el primer diagrama del punto 3.3 (Gestión de Resevas).
+Actualizado el primer diagrama del punto 3.5 (Foro).
