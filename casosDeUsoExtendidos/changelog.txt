@@ -4,4 +4,4 @@ El foro ya no funciona de la misma manera. Ahora en el foro solo se puede respon
 Actualizada la jerarquía de actores.
 Actualizados los diagramas del modelo de casos de uso.
 Actualizado el primer diagrama del punto 3.3 (Gestión de Resevas).
-Actualizado el primer diagrama del punto 3.5 (Foro).
+Actualizado el primer diagrama del punto 3.5 (Foro), y el diagrama Ver_Tema.
