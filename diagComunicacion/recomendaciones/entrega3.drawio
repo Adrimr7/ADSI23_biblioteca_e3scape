@@ -1,0 +1,116 @@
+<mxfile host="app.diagrams.net" modified="2023-11-24T08:54:00.260Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="WXG-TxU4xsU_8TPr_B80" version="22.1.3" type="google">
+  <diagram name="Página-1" id="c_9OO91z7XPZp3MFoxWn">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-1" value="Cualquier vista" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="165" width="110" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-2" value="WebServer" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="155" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-3" value="SGBD" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="157.5" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-4" value="&lt;b&gt;RECOMENDACIONES DEL SISTEMA&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="130" y="40" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-5" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="175" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-6" value="Biblioteca" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="152.5" width="100" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-7" value="1. El usuario clicka &quot;Inicio&quot;.&lt;br&gt;&lt;br&gt;2. Inicio()&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1 obtenerRecomendaciones()&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1.1 getLibrosLeidos(email)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.1.1 executeQuery(&quot;Devolver libros leídos por el usuario&quot;)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.1.2 new Libro(id, título, descripción, idAutor, numCopias, emailAdmin)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.2.getUsuariosHaLeído(idLibro): ListaUsuarios&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.2.1 executeQuery(&quot;Usuarios que han leído el libro&quot;)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.2.2 new Usuario(email, rol, contraseña, emailAdmin)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;//Por cada usuario que ha leído el libro&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.3 getLibrosLeidos(email)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.3.1 executeQuery(&quot;Devolver libros leídos por el usuario&quot;)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.3.2 new Libro(id, título, descripción, idAutor, numCopias, emailAdmin)&lt;br&gt;&lt;br&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;//Cuando no hay libros leídos&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.4.getLibroRandom()&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;2.1.4.1 executeQuery(&quot;Devolver libros top 50 leídos&quot;)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;2.1.4.2 new Libro(id, título, descripción, idAutor, numCopias, emailAdmin)&lt;br&gt;&lt;br&gt;3. new MenúPrincipal()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="20" y="420" width="530" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-8" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="BU_0XZbtuo67gIAc-cAM-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="335" as="sourcePoint" />
+            <mxPoint x="120" y="205" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=-0.02;entryY=0.54;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="BU_0XZbtuo67gIAc-cAM-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="209.5" as="sourcePoint" />
+            <mxPoint x="280" y="209.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-10" value="" style="endArrow=classic;html=1;rounded=0;entryX=-0.029;entryY=0.554;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.56;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="BU_0XZbtuo67gIAc-cAM-2" target="BU_0XZbtuo67gIAc-cAM-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="100" y="225" as="sourcePoint" />
+            <mxPoint x="140" y="225" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-11" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.99;exitY=0.514;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="BU_0XZbtuo67gIAc-cAM-6" target="BU_0XZbtuo67gIAc-cAM-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="237.5" as="sourcePoint" />
+            <mxPoint x="170" y="237.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-12" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="175" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-13" value="2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="175" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-14" value="2.1.1, 2.1.2, 2.1.3, 2.1.4" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="470" y="80" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-15" value="2.1.1.1, 2.1.2.1, 2.1.3.1, 2.1.4.1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="145" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-18" value="LIBRO" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="300" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-19" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.837;exitY=0.88;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="BU_0XZbtuo67gIAc-cAM-6" target="BU_0XZbtuo67gIAc-cAM-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="539.5" y="330" as="sourcePoint" />
+            <mxPoint x="620.5" y="332" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-20" value="2.1.1.2, 2.1.3.2, 2.1.4.2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="580" y="270" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-21" value="USUARIO" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="440" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-22" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.831;exitY=0.89;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.035;entryY=0.425;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="BU_0XZbtuo67gIAc-cAM-6" target="BU_0XZbtuo67gIAc-cAM-21">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="358" as="sourcePoint" />
+            <mxPoint x="600" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-23" value="2.1.2.2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="530" y="370" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-25" value="2.1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="390" y="175" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-26" value="" style="curved=1;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="157.5" as="sourcePoint" />
+            <mxPoint x="540" y="157.5" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="480" y="147.5" />
+              <mxPoint x="520" y="117.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-27" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.512;exitY=1.028;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="BU_0XZbtuo67gIAc-cAM-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="360" as="sourcePoint" />
+            <mxPoint x="341" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-28" value="Menú principal" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="305" width="110" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="BU_0XZbtuo67gIAc-cAM-29" value="3" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="330" y="257.5" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
