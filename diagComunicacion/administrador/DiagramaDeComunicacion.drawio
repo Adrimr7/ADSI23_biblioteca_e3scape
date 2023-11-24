@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-23T19:13:53.060Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="oquU-mJhvL2KgcAtYG1p" version="22.1.3" type="google">
+<mxfile host="app.diagrams.net" modified="2023-11-24T08:07:15.711Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="c7Q0VsT4BYElvDYU5bJ6" version="22.1.3" type="google">
   <diagram name="Página-1" id="M-0s0VyHH_Z-izu_WwVb">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -19,7 +19,7 @@
         <mxCell id="0VJDASDO0vlOfgR1g9Ta-5" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
           <mxGeometry x="50" y="175" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="0VJDASDO0vlOfgR1g9Ta-6" value="Gestor de Usuarios" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="0VJDASDO0vlOfgR1g9Ta-6" value="Biblioteca" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="420" y="150" width="100" height="105" as="geometry" />
         </mxCell>
         <mxCell id="0VJDASDO0vlOfgR1g9Ta-7" value="1. El administrador accede al apartado &quot;Panel de Administrador&quot;, introducir el email del usuario en el campo y hacer clic en eliminar usuario&lt;br&gt;2. eliminarUsuario(email)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1 eliminarUsuario(email)&lt;br&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;2.1.1 executeQuery(&quot;Eliminar libros prestados&quot;)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1.2 executeQuery(&quot;Eliminar libros devueltos&quot;)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1.3 executeQuery(&quot;Eliminar amigos&quot;)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1.4 executeQuery(&quot;Eliminar solicitudes de amistad enviadas/recibidas&quot;)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1.5 executeQuery(&quot;Eliminar los comentarios&quot;)&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;2.1.6 executeQuery(&quot;Eliminar usuario&quot;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
@@ -76,7 +76,7 @@
         <mxCell id="0VJDASDO0vlOfgR1g9Ta-19" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
           <mxGeometry x="40" y="595" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="0VJDASDO0vlOfgR1g9Ta-20" value="Gestor de Usuarios" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="0VJDASDO0vlOfgR1g9Ta-20" value="Biblioteca" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="410" y="570" width="100" height="105" as="geometry" />
         </mxCell>
         <mxCell id="0VJDASDO0vlOfgR1g9Ta-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="0VJDASDO0vlOfgR1g9Ta-19">
@@ -154,7 +154,7 @@
         <mxCell id="0VJDASDO0vlOfgR1g9Ta-44" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
           <mxGeometry x="15" y="1010" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="0VJDASDO0vlOfgR1g9Ta-45" value="Gestor de Libros" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="0VJDASDO0vlOfgR1g9Ta-45" value="Biblioteca" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="385" y="985" width="100" height="105" as="geometry" />
         </mxCell>
         <mxCell id="0VJDASDO0vlOfgR1g9Ta-46" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="0VJDASDO0vlOfgR1g9Ta-44">
