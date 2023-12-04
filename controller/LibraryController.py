@@ -48,3 +48,12 @@ class LibraryController:
 			return User(user[0][0], user[0][1], user[0][2])
 		else:
 			return None
+		
+	def get_book(self, id):
+		book = db.select("SELECT * from Book WHERE id = ?", (id,))
+		print(len(book))
+		print(book)
+		if len(book) > 0:
+			return Book(book[0][0],book[0][1],book[0][2],book[0][3],book[0][4])
+		else:
+			return None

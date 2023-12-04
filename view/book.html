@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+
+    
+
+    <div class="col-lg-4 col-md-6 col-sm-12 my-2">
+        <div class="card d-flex flex-row" style="width: 65rem;">
+            <img src="{{book.cover}}" class="rounded" style="max-width: 6rem; height: fit-content;">
+            <div class="card-body">
+                <h5 class="card-title">{{book.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{book.author}}</h6>
+                <p class="card-text">{{book.description}}</p>
+        </div>
+    </div>
+    <br>
+    <div style="width: 65rem;">
+        <a href="/catalogue"><button type="submit" id="SignUpButton" class="btn btn-primary">Volver</button></a>
+        <!--return available only in case of loan-->
+        <a href=""><button type="submit" id="SignUpButton" class="btn btn-primary">Devolver SÓLO SI SE TIENE RESERVADO</button></a>
+        <a href=""><button type="submit" id="SignUpButton" class="btn btn-primary">Reservar</button></a>
+    </div>
+
+</div>
+
+{% endblock %}
