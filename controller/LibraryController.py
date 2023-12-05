@@ -59,16 +59,26 @@ class LibraryController:
 			return None
 		
 	def obtenerRecomendaciones(self, user):
-		leidos = None #self.__getLibrosLeidos(user)
+		leidos = self.__getLibrosLeidos(user)
 		if leidos == None:
-			return None
+			sugeridos = self.__getLibrosRandom()
+			return sugeridos
 		else:
-			return None
+			users = self.__getUsuariosHaLeido(leidos)
+			if len(users) <= 0:
+				sugeridos = self.__getLibrosRandom()
+				return sugeridos
+			else:
+				sugeridos = []
+				for u in users:
+					sugeridos.extend(self.__getLibrosLeidos(u))
+				return sugeridos
+			
 	
 	def __getLibrosLeidos(self, email):
-		res = db.select("SELECT * from Prestar WHERE emailUser = ?", (email))
+		res = db.select("SELECT * from Prestar WHERE emailUser = ?", (email,))
 
-		if len(books) > 0:
+		if len(res) > 0:
 			books = [
 			Book(res[0],res[1],res[2],res[3],res[4])
 			for b in res
@@ -77,6 +87,38 @@ class LibraryController:
 		else:
 			return None
 		
-	def __getUsuariosHaLeido(idLibro):
+	def __getUsuariosHaLeido(self, books):
+		users = []
+		i = 0
+		for b in books:
+			res = db.select("SELECT emailUser from Prestar WHERE idLibro = ?", (b.id,))
+			if len(res)>0:
+				users.append(res[0][i])
+			i += 1
+		
+		return users
+	
+	"""
+	Este método se pensó para hacer inmersion respecto a uno supeior.
+	El superior recibe un único usuario.
+	Este recibo una lista de usuario.
+	Debido a que no se especifica en la cabecera el tipo, se ha descartado el desarrollo.
+	Solución: por cada usuario se llama al método de arriba
+	
+	def __getLibrosLeidos(self, users):
+		leidos = []
+		i = 0
+		for u in users:
+			res = db.select("SELECT * from Prestar WHERE emailUser = ?", (u[i].email,))
+
+			if len(res) > 0:
+				for b in res:
+					leidos.append(Book(res[0],res[1],res[2],res[3],res[4]))
+			i += 1
+		return leidos
+	"""
+		
+	
+	def __getLibrosRandom(self):
 		return None
 		

@@ -30,8 +30,7 @@ def add_cookies(response):
 @app.route('/')
 def index():
 	if 'user' in dir(request) and request.user and request.user.token:
-		print(request.user)
-		recomendaciones = library.obtenerRecomendaciones(request.user)
+		recomendaciones = library.obtenerRecomendaciones(request.user.email)
 		return render_template('index.html', recomendaciones=recomendaciones)
 	else:
 		return render_template('index.html')
