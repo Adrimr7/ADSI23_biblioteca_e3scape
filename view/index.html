@@ -3,5 +3,18 @@
 {% block content %}
 <div class="container p-5 my-5 border">
     <h1>The best library</h1>
+    {% if 'user' in request.__dict__ and request.user and request.user.token: %}
+        <br>
+        <h5>Libros recomendados:</h5>
+        {% if recomendaciones == None: %}
+            <h6>No hay recomendaciones</h6>
+        {% else: %}
+            {% for book in books %}
+            <div class="card-body">
+                <a href="/book?id={{book.id}}"><h5 class="card-title">{{book.title}}</h5></a>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 </div>
 {% endblock %}
