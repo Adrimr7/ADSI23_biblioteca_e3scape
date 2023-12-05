@@ -57,3 +57,26 @@ class LibraryController:
 			return Book(book[0][0],book[0][1],book[0][2],book[0][3],book[0][4])
 		else:
 			return None
+		
+	def obtenerRecomendaciones(self, user):
+		leidos = None #self.__getLibrosLeidos(user)
+		if leidos == None:
+			return None
+		else:
+			return None
+	
+	def __getLibrosLeidos(self, email):
+		res = db.select("SELECT * from Prestar WHERE emailUser = ?", (email))
+
+		if len(books) > 0:
+			books = [
+			Book(res[0],res[1],res[2],res[3],res[4])
+			for b in res
+		]
+			return books
+		else:
+			return None
+		
+	def __getUsuariosHaLeido(idLibro):
+		return None
+		
