@@ -48,13 +48,13 @@ cur.execute("""
 
 cur.execute("""
 	CREATE TABLE Prestar(
-		emailUser varchar(30) primary key,
-		idLibro integer not null,
-		fechaHora datetime not null,
+		emailUser varchar(30),
+		idLibro integer,
+		fechaHora datetime,
 		fechaFin date,
 		PRIMARY KEY(emailUser, idLibro, fechaHora),
 		FOREIGN KEY(emailUser) REFERENCES User(email),
-		FOREIGN KEY(idLibro) REFERENCES Book(id),
+		FOREIGN KEY(idLibro) REFERENCES Book(id)
 	)
 """)
 
