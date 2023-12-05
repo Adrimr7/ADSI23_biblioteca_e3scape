@@ -29,7 +29,12 @@ def add_cookies(response):
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+	if 'user' in dir(request) and request.user and request.user.token:
+		print(request.user)
+		recomendaciones = library.obtenerRecomendaciones(request.user)
+		return render_template('index.html', recomendaciones=recomendaciones)
+	else:
+		return render_template('index.html')
 
 
 @app.route('/catalogue')
