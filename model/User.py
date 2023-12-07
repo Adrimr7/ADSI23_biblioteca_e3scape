@@ -1,7 +1,7 @@
 import datetime
 from .Connection import Connection
 from .tools import hash_password
-#pruebacommit
+
 db = Connection()
 
 class Session:
