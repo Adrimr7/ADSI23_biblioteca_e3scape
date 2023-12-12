@@ -1,11 +1,15 @@
 import hashlib
 import sqlite3
 import json
+import os
 
 salt = "library"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(script_dir, '..', 'datos.db')
+usuarios_path = os.path.join(script_dir, '..', 'usuarios.json')
+libros_path = os.path.join(script_dir, '..', 'libros.tsv')
 
-
-con = sqlite3.connect("datos.db")
+con = sqlite3.connect(db_path)
 cur = con.cursor()
 
 
@@ -58,9 +62,64 @@ cur.execute("""
 	)
 """)
 
+cur.execute("""
+	CREATE TABLE Tema(
+		titulo varchar(50),
+		emailUser varchar(30),
+		fechaHora datetime,
+		descTema varchar(300),
+		PRIMARY KEY(titulo),
+		FOREIGN KEY(emailUser) REFERENCES User(email)
+	)
+""")
+
+cur.execute("""
+	CREATE TABLE Comenta(
+		emailUser varchar(30),
+		tituloTema varchar(50),
+		fechaHora datetime,
+		mensaje varchar(300),
+		PRIMARY KEY(emailUser, tituloTema),
+		FOREIGN KEY(emailUser) REFERENCES User(email),
+		FOREIGN KEY(tituloTema) REFERENCES Tema(titulo)
+	)
+""")
+
+cur.execute("""
+	CREATE TABLE SonAmigos(
+		emailUser1 varchar(30),
+		emailUser2 varchar(30),
+		PRIMARY KEY(emailUser1, emailUser2),
+		FOREIGN KEY(emailUser1) REFERENCES User(email),
+		FOREIGN KEY(emailUser1) REFERENCES User(email)
+	)
+""")
+
+cur.execute("""
+	CREATE TABLE Solicita(
+		emailUser1 varchar(30),
+		emailUser2 varchar(30),
+		PRIMARY KEY(emailUser1, emailUser2),
+		FOREIGN KEY(emailUser1) REFERENCES User(email),
+		FOREIGN KEY(emailUser1) REFERENCES User(email)
+	)
+""")
+
+cur.execute("""
+	CREATE TABLE Reseña(
+		emailUser varchar(30),
+		idLibro integer,
+		reseña text,
+		valoracion float,
+		PRIMARY KEY(emailUser, idLibro),
+		FOREIGN KEY(emailUser) REFERENCES User(email),
+		FOREIGN KEY(idLibro) REFERENCES Book(id)
+	)
+""")
+
 ### Insert users
 
-with open('usuarios.json', 'r') as f:
+with open(usuarios_path, 'r') as f:
 	usuarios = json.load(f)['usuarios']
 
 for user in usuarios:
@@ -72,7 +131,7 @@ for user in usuarios:
 
 
 #### Insert books
-with open('libros.tsv', 'r') as f:
+with open(libros_path, 'r', encoding='utf-8') as f:
 	libros = [x.split("\t") for x in f.readlines()]
 
 for author, title, cover, description in libros:
