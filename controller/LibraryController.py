@@ -98,7 +98,7 @@ class LibraryController:
 		else:
 			return None
 
-	def __getResenas(self, idLibro, email):
+	def __getResena(self, idLibro, email):
 		res = db.select("SELECT * from Reseña WHERE idLibro = ? AND emailUser = ?", (idLibro, email))
 
 		if len(res) > 0:
