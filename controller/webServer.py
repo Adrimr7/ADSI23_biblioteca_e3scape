@@ -52,6 +52,10 @@ def book():
 	book = library.get_book(id)
 	return render_template('book.html', book=book)
 
+@app.route('/forum')
+def forum():
+	temas = library.get_temas()
+	return render_template('forum.html', temas=temas)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
