@@ -1,28 +1,30 @@
 {
   "usuarios": [
     {
-      "id": "a1",
       "nombres": "James Gomez",
       "email": "james@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "admin": false
     },
     {
       "nombres": "Jhon Doe",
       "email": "jhon@gmail.com",
       "password": "123",
-      "id": "IPB7fSC"
+      "admin": false
     },
     {
       "nombres": "Juan Ejemplo",
       "email": "ejemplo@gmail.com",
       "password": "123456",
-      "id": "NgbZCib"
+      "admin": false
     },
     {
-      "nombres": "Juan Ejemplo",
-      "email": "ejemplo@gmail.com",
-      "password": "123456",
-      "id": "S_Faisg"
+      "nombres": "Admin Admin",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "admin": true
     }
   ]
 }
+
+
