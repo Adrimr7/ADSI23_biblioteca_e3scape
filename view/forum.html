@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+
+    <hr class="hr" />
+
+    <div class="row">
+
+        {% for tema in temas %}
+            <div class="col-lg-12 col-md-12 col-sm-12 my-12">
+                <div class="card d-flex flex-row" style="width: 18rem;">
+                    <div class="card-body">
+                        <a href="/tema?title={{tema.title}}"><h5 class="card-title">{{tema.title}}</h5></a>
+                        {% if tema.description: %}
+                        <p class="card-text">{{tema.description}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <hr class="hr" />
+</div>
+
+{% endblock %}
