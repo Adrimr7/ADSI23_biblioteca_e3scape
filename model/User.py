@@ -13,7 +13,7 @@ class Session:
 		return f"{self.hash} ({self.time})"
 
 class User:
-	def __init__(self, username, email):
+	def __init__(self, email, username):
 		self.username = username
 		self.email = email
 
@@ -24,6 +24,7 @@ class User:
 		now = float(datetime.datetime.now().time().strftime("%Y%m%d%H%M%S.%f"))
 		session_hash = hash_password(str(self.email)+str(now))
 		db.insert("INSERT INTO Session VALUES (?, ?, ?)", (session_hash, self.email, now))
+		print(self.email)
 		return Session(session_hash, now)
 
 	def validate_session(self, session_hash):

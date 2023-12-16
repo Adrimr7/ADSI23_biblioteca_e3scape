@@ -163,3 +163,13 @@ class LibraryController:
 	def __getLibrosRandom(self):
 		return None
 		
+
+	def get_amigos(self, email):
+		selectAmigos = db.select("SELECT * from SonAmigos WHERE emailUser1 = ? OR emailuser2 = ?", (email, email))
+		amigos = []
+		for amistad in selectAmigos:
+			if amistad[0] == email:
+				amigos.append(amistad[1])
+			else:
+				amigos.append(amistad[0])
+		return amigos

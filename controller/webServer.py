@@ -10,11 +10,14 @@ library = LibraryController()
 @app.before_request
 def get_logged_user():
 	if '/css' not in request.path and '/js' not in request.path:
+		print("Entra a get_loggedUser")
 		token = request.cookies.get('token')
 		time = request.cookies.get('time')
 		if token and time:
+			print("Entra a get_loggedUser, IF1")
 			request.user = library.get_user_cookies(token, float(time))
 			if request.user:
+				print("Entra a get_loggedUser, IF2")
 				request.user.token = token
 
 
@@ -75,17 +78,25 @@ def resenas():
 	resenas = library.get_resenas(email)
 	return render_template('resenas.html', resenas=resenas)
 
+@app.route('/amigos')
+def amigos():
+	email = request.values.get("email", "")
+	amigos = library.get_amigos(email)
+	return render_template('amigos.html', amigos=amigos)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if 'user' in dir(request) and request.user and request.user.token:
 		return redirect('/')
 	email = request.values.get("email", "")
-	#print(email)
+	print(email)
 	password = request.values.get("password", "")
-	#print(password)
+	print(password)
 	user = library.get_user(email, password)
-	#print(user)
+	print(user)
 	if user:
+		print(user.email)
+		print("MailLogin")
 		session = user.new_session()
 		resp = redirect("/")
 		resp.set_cookie('token', session.hash)
