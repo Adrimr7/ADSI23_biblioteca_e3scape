@@ -6,8 +6,11 @@ import os
 salt = "library"
 script_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(script_dir, '..', 'datos.db')
+
 usuarios_path = os.path.join(script_dir, '..', 'usuarios.json')
 temas_path = os.path.join(script_dir, '..', 'temas.json')
+comentarios_path = os.path.join(script_dir, '..', 'comentarios.json')
+
 libros_path = os.path.join(script_dir, '..', 'libros.tsv')
 
 con = sqlite3.connect(db_path)
@@ -98,13 +101,24 @@ cur.execute("""
 	CREATE TABLE Comenta(
 		emailUser varchar(30),
 		tituloTema varchar(50),
-		fechaHora datetime,
 		mensaje varchar(300),
 		PRIMARY KEY(emailUser, tituloTema),
 		FOREIGN KEY(emailUser) REFERENCES User(email),
 		FOREIGN KEY(tituloTema) REFERENCES Tema(titulo)
 	)
 """)
+
+#cur.execute("""
+#	CREATE TABLE Comenta(
+#		emailUser varchar(30),
+#		tituloTema varchar(50),
+#		fechaHora datetime,
+#		mensaje varchar(300),
+#		PRIMARY KEY(emailUser, tituloTema),
+#		FOREIGN KEY(emailUser) REFERENCES User(email),
+#		FOREIGN KEY(tituloTema) REFERENCES Tema(titulo)
+#	)
+#""")
 
 cur.execute("""
 	CREATE TABLE SonAmigos(
@@ -146,6 +160,9 @@ with open(usuarios_path, 'r') as f:
 with open(temas_path, 'r') as f:
 	temas = json.load(f)['temas']
 
+with open(comentarios_path, 'r') as f:
+	comentarios = json.load(f)['comentarios']
+
 for user in usuarios:
 	dataBase_password = user['password'] + salt
 	hashed = hashlib.md5(dataBase_password.encode())
@@ -156,6 +173,11 @@ for user in usuarios:
 for tema in temas:
 	cur.execute(f"""INSERT INTO Tema VALUES ('{tema['titulo']}', '{tema['emailUser']}', '{tema['descTema']}')""")
 	con.commit()
+
+for comentario in comentarios:
+	cur.execute(f"""INSERT INTO Comenta VALUES ('{comentario['tituloTema']}', '{comentario['emailUser']}', '{comentario['mensaje']}')""")
+	con.commit()
+
 
 
 #### Insert books

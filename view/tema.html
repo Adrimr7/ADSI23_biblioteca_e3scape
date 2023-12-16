@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+
+    <hr class="hr" />
+
+    <div class="row">
+
+        {% for comentario in comentarios %}
+            <div class="col-lg-4 col-md-6 col-sm-12 my-2">
+                <div class="card d-flex flex-row" style="width: 18rem;">
+                    <div class="card-body">
+                        <p class="card-text">{{comentario.mensaje}}</p>
+                        <p class="card-text">Posted by : {{comentario.emailUser}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <hr class="hr" />
+</div>
+
+{% endblock %}

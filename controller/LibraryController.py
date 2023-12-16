@@ -1,4 +1,4 @@
-from model import Connection, Book, User, Tema, Resena
+from model import Connection, Book, User, Tema, Resena, Comenta
 from model.tools import hash_password
 
 db = Connection()
@@ -45,6 +45,16 @@ class LibraryController:
 		for t in res:
 			temas.append(Tema(t[0], t[1], t[2]))
 		return temas
+
+	def get_comentarios(self, tituloTema):
+
+		res = db.select("SELECT * FROM Comenta WHERE tituloTema = ?", (tituloTema,))
+
+		comentarios = []
+		print(comentarios)
+		for t in res:
+			comentarios.append(Comenta(t[0], t[1], t[2]))
+		return comentarios
 
 	def get_user(self, email, password):
 		user = db.select("SELECT * from User WHERE email = ? AND password = ?", (email, hash_password(password)))

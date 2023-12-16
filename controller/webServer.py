@@ -57,6 +57,12 @@ def forum():
 	temas = library.get_temas()
 	return render_template('forum.html', temas=temas)
 
+@app.route('/tema')
+def tema():
+	titulo = request.values.get("titulo", "")
+	comentarios = library.get_comentarios(titulo)
+	return render_template('tema.html', comentarios=comentarios)
+
 @app.route('/resena')
 def resena():
 	id = request.values.get("id", "")

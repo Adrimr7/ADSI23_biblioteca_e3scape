@@ -4,4 +4,5 @@ from .Book import Book
 from .User import User
 from .Tema import Tema
 from .Resena import Resena
+from .Comenta import Comenta
 
