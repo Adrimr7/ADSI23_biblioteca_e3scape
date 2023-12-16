@@ -43,7 +43,7 @@ class LibraryController:
 		""")
 		temas = []
 		for t in res:
-			temas.append(Tema(t[0], t[1]))
+			temas.append(Tema(t[0], t[1], t[2]))
 		return temas
 
 	def get_user(self, email, password):

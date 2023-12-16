@@ -7,6 +7,7 @@ salt = "library"
 script_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(script_dir, '..', 'datos.db')
 usuarios_path = os.path.join(script_dir, '..', 'usuarios.json')
+temas_path = os.path.join(script_dir, '..', 'temas.json')
 libros_path = os.path.join(script_dir, '..', 'libros.tsv')
 
 con = sqlite3.connect(db_path)
@@ -72,11 +73,21 @@ cur.execute("""
 	)
 """)
 
+#cur.execute("""
+#	CREATE TABLE Tema(
+#		titulo varchar(50),
+#		emailUser varchar(30),
+#		fechaHora datetime,
+#		descTema varchar(300),
+#		PRIMARY KEY(titulo),
+#		FOREIGN KEY(emailUser) REFERENCES User(email)
+#	)
+#""")
+
 cur.execute("""
 	CREATE TABLE Tema(
 		titulo varchar(50),
 		emailUser varchar(30),
-		fechaHora datetime,
 		descTema varchar(300),
 		PRIMARY KEY(titulo),
 		FOREIGN KEY(emailUser) REFERENCES User(email)
@@ -132,11 +143,18 @@ cur.execute("""
 with open(usuarios_path, 'r') as f:
 	usuarios = json.load(f)['usuarios']
 
+with open(temas_path, 'r') as f:
+	temas = json.load(f)['temas']
+
 for user in usuarios:
 	dataBase_password = user['password'] + salt
 	hashed = hashlib.md5(dataBase_password.encode())
 	dataBase_password = hashed.hexdigest()
 	cur.execute(f"""INSERT INTO User VALUES ('{user['email']}', '{user['nombres']}', '{dataBase_password}', {user['admin']})""")
+	con.commit()
+
+for tema in temas:
+	cur.execute(f"""INSERT INTO Tema VALUES ('{tema['titulo']}', '{tema['emailUser']}', '{tema['descTema']}')""")
 	con.commit()
 
 
