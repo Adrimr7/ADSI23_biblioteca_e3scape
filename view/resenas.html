@@ -6,7 +6,7 @@
     <form class="form-inline">
       <div class="input-group mb-2 mr-sm-2">
         <label for="idLibro" class="col-sm-2 col-form-label">Libro</label>
-        <input type="text" class="form-control mb-2" id="idLibro" name="idLibro" placeholder="Pon el id de un libro para buscar su reseña" {% if idLibro != "": %}value="{{idLibro}}"{% endif %}>
+        <input type="text" class="form-control mb-2" id="titulo" name="titulo" placeholder="Pon el titulo de un libro para buscar su reseña" {% if idLibro != "": %}value="{{idLibro}}"{% endif %}>
       </div>
       <button type="submit" class="btn btn-primary">
           <i class="fa fa-search"></i>
@@ -22,9 +22,9 @@
             <div class="col-lg-12 col-md-12 col-sm-12 my-12">
                 <div class="card d-flex flex-row" style="width: 18rem;">
                     <div class="card-body">
-                        <a href="/reseña?idLibro={{reseña.idLibro}}"><h5 class="card-title">{{reseña.idLibro}}</h5></a>
-                        {% if reseña.reseña: %}
-                        <p class="card-text">{{reseña.reseña}}</p>
+                        <a href="/resena?idLibro={{resena.idLibro}}"><h5 class="card-title">{{resena.idLibro}}</h5></a>
+                        {% if resena.resena: %}
+                        <p class="card-text">{{resena.resena}}</p>
                         {% endif %}
                     </div>
                 </div>

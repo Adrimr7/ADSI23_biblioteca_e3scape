@@ -103,15 +103,17 @@ class LibraryController:
 		res = db.select("SELECT * from Reseña WHERE emailUser = ?", (email,))
 		resenas = []
 		for r in res:
-			resenas.append(Resena(r[1], r[2], r[3]))
+			resenas.append(Resena(r[0], r[1], r[2], r[3]))
 		return resenas
 
-	def __getResena(self, idLibro, email):
+	def getResena(self, idLibro, email):
 		res = db.select("SELECT * from Reseña WHERE idLibro = ? AND emailUser = ?", (idLibro, email))
+		lib = db.select("SELECT * from Book WHERE idLibro = ?", (idLibro,))
 
-		if len(res) > 0:
-			resena = Resena(res[1],res[2],res[3])
-			return resena
+		if len(res) > 0 and len(lib) > 0:
+			resena = Resena(res[0][0], res[0][1], res[0][2], res[0][3])
+			libro = Book(lib[0][0], lib[0][1], lib[0][2], lib[0][3], lib[0][4])
+			return (resena, libro)
 
 		else:
 			return None

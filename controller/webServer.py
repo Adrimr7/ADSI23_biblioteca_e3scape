@@ -57,6 +57,12 @@ def forum():
 	temas = library.get_temas()
 	return render_template('forum.html', temas=temas)
 
+@app.route('/resena')
+def resena():
+	id = request.values.get("id", "")
+	resena, libro = library.getResena(id, request.user.email)
+	return render_template('resena.html', book = libro, resena = resena)
+
 @app.route('/resenas')
 def resenas():
 	email = request.values.get("email", "")
