@@ -49,14 +49,14 @@ class LibraryController:
 	def get_user(self, email, password):
 		user = db.select("SELECT * from User WHERE email = ? AND password = ?", (email, hash_password(password)))
 		if len(user) > 0:
-			return User(user[0][0], user[0][1], user[0][2])
+			return User(user[0][0], user[0][1])
 		else:
 			return None
 
 	def get_user_cookies(self, token, time):
-		user = db.select("SELECT u.* from User u, Session s WHERE u.id = s.user_id AND s.last_login = ? AND s.session_hash = ?", (time, token))
+		user = db.select("SELECT u.* from User u, Session s WHERE s.last_login = ? AND s.session_hash = ? AND u.email = s.user_email", (time, token, ))
 		if len(user) > 0:
-			return User(user[0][0], user[0][1], user[0][2])
+			return User(user[0][0], user[0][1])
 		else:
 			return None
 		
@@ -97,6 +97,14 @@ class LibraryController:
 			return books
 		else:
 			return None
+
+	def get_resenas(self, email):
+
+		res = db.select("SELECT * from Reseña WHERE emailUser = ?", (email,))
+		resenas = []
+		for r in res:
+			resenas.append(Resena(r[1], r[2], r[3]))
+		return resenas
 
 	def __getResena(self, idLibro, email):
 		res = db.select("SELECT * from Reseña WHERE idLibro = ? AND emailUser = ?", (idLibro, email))

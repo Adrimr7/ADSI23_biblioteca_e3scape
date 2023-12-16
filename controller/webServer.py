@@ -57,13 +57,22 @@ def forum():
 	temas = library.get_temas()
 	return render_template('forum.html', temas=temas)
 
+@app.route('/resenas')
+def resenas():
+	email = request.values.get("email", "")
+	resenas = library.get_resenas(email)
+	return render_template('resenas.html', resenas=resenas)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if 'user' in dir(request) and request.user and request.user.token:
 		return redirect('/')
 	email = request.values.get("email", "")
+	#print(email)
 	password = request.values.get("password", "")
+	#print(password)
 	user = library.get_user(email, password)
+	#print(user)
 	if user:
 		session = user.new_session()
 		resp = redirect("/")

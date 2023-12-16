@@ -54,9 +54,9 @@ cur.execute("""
 cur.execute("""
 	CREATE TABLE Session(
 		session_hash varchar(32) primary key,
-		user_id integer,
+		user_email varchar(30),
 		last_login float,
-		FOREIGN KEY(user_id) REFERENCES User(id)
+		FOREIGN KEY(user_email) REFERENCES User(email)
 	)
 """)
 
@@ -136,7 +136,7 @@ for user in usuarios:
 	dataBase_password = user['password'] + salt
 	hashed = hashlib.md5(dataBase_password.encode())
 	dataBase_password = hashed.hexdigest()
-	cur.execute(f"""INSERT INTO User VALUES ('{user['nombres']}', '{user['email']}', '{dataBase_password}', {user['admin']})""")
+	cur.execute(f"""INSERT INTO User VALUES ('{user['email']}', '{user['nombres']}', '{dataBase_password}', {user['admin']})""")
 	con.commit()
 
 

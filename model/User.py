@@ -13,8 +13,7 @@ class Session:
 		return f"{self.hash} ({self.time})"
 
 class User:
-	def __init__(self, id, username, email):
-		self.id = id
+	def __init__(self, username, email):
 		self.username = username
 		self.email = email
 
@@ -23,19 +22,19 @@ class User:
 
 	def new_session(self):
 		now = float(datetime.datetime.now().time().strftime("%Y%m%d%H%M%S.%f"))
-		session_hash = hash_password(str(self.id)+str(now))
-		db.insert("INSERT INTO Session VALUES (?, ?, ?)", (session_hash, self.id, now))
+		session_hash = hash_password(str(self.email)+str(now))
+		db.insert("INSERT INTO Session VALUES (?, ?, ?)", (session_hash, self.email, now))
 		return Session(session_hash, now)
 
 	def validate_session(self, session_hash):
-		s = db.select("SELECT * from Session WHERE user_id = ? AND session_hash = ?", (self.id, session_hash))
+		s = db.select("SELECT * from Session WHERE user_email = ? AND session_hash = ?", (self.email, session_hash))
 		if len(s) > 0:
 			now = float(datetime.datetime.now().strftime("%Y%m%d%H%M%S.%f"))
-			session_hash_new = hash_password(str(self.id) + str(now))
-			db.update("UPDATE Session SET session_hash = ?, last_login=? WHERE session_hash = ? and user_id = ?", (session_hash_new, now, session_hash, self.id))
+			session_hash_new = hash_password(str(self.email) + str(now))
+			db.update("UPDATE Session SET session_hash = ?, last_login=? WHERE session_hash = ? and user_email = ?", (session_hash_new, now, session_hash, self.email))
 			return Session(session_hash_new, now)
 		else:
 			return None
 
 	def delete_session(self, session_hash):
-		db.delete("DELETE FROM Session WHERE session_hash = ? AND user_id = ?", (session_hash, self.id))
+		db.delete("DELETE FROM Session WHERE session_hash = ? AND user_email = ?", (session_hash, self.email))

@@ -1,12 +1,6 @@
 {
   "usuarios": [
     {
-      "nombres": "James Gomez",
-      "email": "james@gmail.com",
-      "password": "123456",
-      "admin": false
-    },
-    {
       "nombres": "Jhon Doe",
       "email": "jhon@gmail.com",
       "password": "123",
