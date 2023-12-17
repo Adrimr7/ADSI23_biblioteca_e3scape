@@ -74,8 +74,6 @@ class LibraryController:
 
     def get_book(self, id):
         book = db.select("SELECT * from Book WHERE id = ?", (id,))
-        print(len(book))
-        print(book)
         if len(book) > 0:
             return Book(book[0][0], book[0][1], book[0][2], book[0][3], book[0][4])
         else:
@@ -98,13 +96,12 @@ class LibraryController:
                 return sugeridos
 
     def __getLibrosLeidos(self, email):
-        res = db.select("SELECT * from Prestar WHERE emailUser = ?", (email,))
-
+        res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", ('john@gmail.com',))
+        
         if len(res) > 0:
-            books = [
-                Book(res[0], res[1], res[2], res[3], res[4])
-                for b in res
-            ]
+            books = []
+            for i in res:
+                books.append(i[1])
             return books
         else:
             return None
@@ -133,11 +130,11 @@ class LibraryController:
         users = []
         i = 0
         for b in books:
-            res = db.select("SELECT emailUser from Prestar WHERE idLibro = ?", (b.id,))
+            res = db.select("SELECT emailUser from Prestar WHERE idLibro = ?", (b,))
             if len(res) > 0:
-                users.append(res[0][i])
+                for userRead in res:
+                    users.append(userRead)
             i += 1
-
         return users
 
     """
