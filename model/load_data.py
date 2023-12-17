@@ -10,7 +10,7 @@ db_path = os.path.join(script_dir, '..', 'datos.db')
 usuarios_path = os.path.join(script_dir, '..', 'usuarios.json')
 temas_path = os.path.join(script_dir, '..', 'temas.json')
 comentarios_path = os.path.join(script_dir, '..', 'comentarios.json')
-
+amigos_path = os.path.join(script_dir, '..', 'amigos.json')
 libros_path = os.path.join(script_dir, '..', 'libros.tsv')
 
 con = sqlite3.connect(db_path)
@@ -163,6 +163,9 @@ with open(temas_path, 'r') as f:
 with open(comentarios_path, 'r') as f:
 	comentarios = json.load(f)['comentarios']
 
+with open(amigos_path, 'r') as f:
+	amigos = json.load(f)['amigos']
+
 for user in usuarios:
 	dataBase_password = user['password'] + salt
 	hashed = hashlib.md5(dataBase_password.encode())
@@ -178,6 +181,10 @@ for comentario in comentarios:
 	cur.execute(f"""INSERT INTO Comenta VALUES ('{comentario['tituloTema']}', '{comentario['emailUser']}', '{comentario['mensaje']}')""")
 	con.commit()
 
+#Para cada línea de amigos es necesario primero definir el path, que se define en la línea 13.
+for amigo in amigos:
+	cur.execute(f"""INSERT INTO SonAmigos VALUES ('{amigo['emailUser1']}', '{amigo['emailUser2']}')""")
+	con.commit()
 
 
 #### Insert books

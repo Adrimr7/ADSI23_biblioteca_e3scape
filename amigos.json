@@ -1,0 +1,12 @@
+{
+  "amigos": [
+    {
+		"emailUser1": "admin@gmail.com",
+		"emailUser2": "juan@gmail.com"
+    },
+    {
+		"emailUser1": "jhon@gmail.com",
+		"emailUser2": "admin@gmail.com"
+    }
+  ]
+}
