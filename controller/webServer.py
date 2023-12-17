@@ -78,7 +78,7 @@ def resena():
 
 @app.route('/resenas')
 def resenas():
-	email = request.values.get("email", "")
+	email = request.user.email
 	resenas = library.get_resenas(email)
 	return render_template('resenas.html', resenas=resenas)
 

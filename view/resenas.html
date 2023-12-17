@@ -5,8 +5,8 @@
 
     <form class="form-inline">
       <div class="input-group mb-2 mr-sm-2">
-        <label for="idLibro" class="col-sm-2 col-form-label">Libro</label>
-        <input type="text" class="form-control mb-2" id="titulo" name="titulo" placeholder="Pon el titulo de un libro para buscar su reseña" {% if idLibro != "": %}value="{{idLibro}}"{% endif %}>
+        <label for="title" class="col-sm-2 col-form-label">Titulo</label>
+        <input type="text" class="form-control mb-2" id="title" name="title" placeholder="Escribe el titulo que deseas buscar" {% if title != "": %}value="{{title}}"{% endif %}>
       </div>
       <button type="submit" class="btn btn-primary">
           <i class="fa fa-search"></i>
@@ -26,6 +26,7 @@
                         {% if resena.resena: %}
                         <p class="card-text">{{resena.resena}}</p>
                         {% endif %}
+                        <p class="card-text">{{resena.valoracion}}</p>
                     </div>
                 </div>
             </div>

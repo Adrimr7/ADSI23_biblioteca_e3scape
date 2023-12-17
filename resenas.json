@@ -1,0 +1,16 @@
+{
+  "resenas": [
+    {
+        "emailUser" : "jhon@gmail.com",
+		"idLibro" : 1,
+		"resena" : "buen libro",
+		"valoracion" :  7.5
+    },
+    {
+        "emailUser": "juan@gmail.com",
+        "idLibro" : 2,
+        "resena" : "no me ha gustado este libro",
+        "valoracion" : 3.0
+    }
+  ]
+}

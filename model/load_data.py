@@ -12,6 +12,7 @@ temas_path = os.path.join(script_dir, '..', 'temas.json')
 comentarios_path = os.path.join(script_dir, '..', 'comentarios.json')
 amigos_path = os.path.join(script_dir, '..', 'amigos.json')
 libros_path = os.path.join(script_dir, '..', 'libros.tsv')
+resenas_path = os.path.join(script_dir, '..', 'resenas.json')
 
 con = sqlite3.connect(db_path)
 cur = con.cursor()
@@ -144,7 +145,7 @@ cur.execute("""
 	CREATE TABLE Reseña(
 		emailUser varchar(30),
 		idLibro integer,
-		reseña text,
+		resena text,
 		valoracion float,
 		PRIMARY KEY(emailUser, idLibro),
 		FOREIGN KEY(emailUser) REFERENCES User(email),
@@ -166,11 +167,18 @@ with open(comentarios_path, 'r') as f:
 with open(amigos_path, 'r') as f:
 	amigos = json.load(f)['amigos']
 
+with open(resenas_path, 'r') as f:
+	resenas = json.load(f)['resenas']
+
 for user in usuarios:
 	dataBase_password = user['password'] + salt
 	hashed = hashlib.md5(dataBase_password.encode())
 	dataBase_password = hashed.hexdigest()
 	cur.execute(f"""INSERT INTO User VALUES ('{user['email']}', '{user['nombres']}', '{dataBase_password}', {user['admin']})""")
+	con.commit()
+
+for resena in resenas:
+	cur.execute(f"""INSERT INTO Reseña VALUES ('{resena['emailUser']}', '{resena['idLibro']}', '{resena['resena']}', '{resena['valoracion']}')""")
 	con.commit()
 
 for tema in temas:
