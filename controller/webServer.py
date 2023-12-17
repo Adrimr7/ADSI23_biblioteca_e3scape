@@ -34,7 +34,11 @@ def add_cookies(response):
 def index():
 	if 'user' in dir(request) and request.user and request.user.token:
 		recomendaciones = library.obtenerRecomendaciones(request.user.email)
-		return render_template('index.html', recomendaciones=recomendaciones)
+		booksRec = []
+		if recomendaciones != None:
+			for book in recomendaciones:
+				booksRec.append(library.get_book(book))
+		return render_template('index.html', recomendaciones=booksRec)
 	else:
 		return render_template('index.html')
 
