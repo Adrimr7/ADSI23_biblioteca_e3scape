@@ -84,6 +84,19 @@ def amigos():
 	amigos = library.get_amigos(email)
 	return render_template('amigos.html', amigos=amigos)
 
+@app.route('/admin')
+def admin():
+	#Comprobamos si el usuario ha iniciado sesion
+	if 'user' in dir(request) and request.user and request.user.token:
+		email = request.user.email
+		print("-----")
+		print(email)
+		admin = library.esAdmin(email)
+		if admin:
+				return render_template('admin.html')
+	return redirect("/")
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if 'user' in dir(request) and request.user and request.user.token:

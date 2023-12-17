@@ -176,3 +176,11 @@ class LibraryController:
     def get_nombreuser(self, email):
         selectNombre = db.select("SELECT name from User WHERE emailUser = ?", (email))
         return selectNombre
+
+
+    def esAdmin(self, email):
+        es = db.select("SELECT admin from USER WHERE email = ?", (email,))
+        if es[0][0] == 0:
+            return False
+        else:
+            return True
