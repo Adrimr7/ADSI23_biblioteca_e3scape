@@ -13,6 +13,7 @@ class TestLogin(BaseTestClass):
 		self.assertIsNotNone(page.find('form').find('input', type='password'))
 		self.assertIsNotNone(page.find('form').find('button', type='submit'))
 
+
 	def test_login_success(self):
 		res = self.login('jhon@gmail.com', '123')
 		self.assertEqual(302, res.status_code)
