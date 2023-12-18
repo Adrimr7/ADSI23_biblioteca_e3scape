@@ -4,9 +4,9 @@ from .Author import Author
 db = Connection()
 
 class Resena:
-	def __init__(self, emailUser, idLibro, reseña, valoracion):
+	def __init__(self, emailUser, idLibro, resena, valoracion):
 		self.emailUser = emailUser
 		self.idLibro = idLibro
-		self.reseña = reseña
+		self.resena = resena
 		self.valoracion = valoracion
 

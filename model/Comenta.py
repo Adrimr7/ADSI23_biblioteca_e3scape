@@ -8,3 +8,6 @@ class Comenta:
         self.emailUser = emailUser
         self.tituloTema = tituloTema
         self.mensaje = mensaje
+
+    def __str__(self):
+        return f"{self.tituloTema} ({self.mensaje})"

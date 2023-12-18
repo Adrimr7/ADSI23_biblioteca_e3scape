@@ -59,7 +59,7 @@ class LibraryController:
     def get_user(self, email, password):
         user = db.select("SELECT * from User WHERE email = ? AND password = ?", (email, hash_password(password)))
         if len(user) > 0:
-            return User(user[0][0], user[0][1])
+            return User(user[0][0], user[0][1], user[0][3])
         else:
             return None
 
@@ -68,7 +68,7 @@ class LibraryController:
             "SELECT u.* from User u, Session s WHERE s.last_login = ? AND s.session_hash = ? AND u.email = s.user_email",
             (time, token,))
         if len(user) > 0:
-            return User(user[0][0], user[0][1])
+            return User(user[0][0], user[0][1], user[0][3])
         else:
             return None
 

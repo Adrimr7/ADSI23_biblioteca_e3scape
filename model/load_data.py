@@ -155,19 +155,19 @@ cur.execute("""
 
 ### Insert users
 
-with open(usuarios_path, 'r') as f:
+with open(usuarios_path, 'r', encoding='utf-8') as f:
 	usuarios = json.load(f)['usuarios']
 
-with open(temas_path, 'r') as f:
+with open(temas_path, 'r', encoding='utf-8') as f:
 	temas = json.load(f)['temas']
 
-with open(comentarios_path, 'r') as f:
+with open(comentarios_path, 'r', encoding='utf-8') as f:
 	comentarios = json.load(f)['comentarios']
 
-with open(amigos_path, 'r') as f:
+with open(amigos_path, 'r', encoding='utf-8') as f:
 	amigos = json.load(f)['amigos']
 
-with open(resenas_path, 'r') as f:
+with open(resenas_path, 'r', encoding='utf-8') as f:
 	resenas = json.load(f)['resenas']
 
 for user in usuarios:
@@ -186,7 +186,7 @@ for tema in temas:
 	con.commit()
 
 for comentario in comentarios:
-	cur.execute(f"""INSERT INTO Comenta VALUES ('{comentario['tituloTema']}', '{comentario['emailUser']}', '{comentario['mensaje']}')""")
+	cur.execute(f"""INSERT INTO Comenta VALUES ('{comentario['emailUser']}', '{comentario['tituloTema']}', '{comentario['mensaje']}')""")
 	con.commit()
 
 #Para cada línea de amigos es necesario primero definir el path, que se define en la línea 13.

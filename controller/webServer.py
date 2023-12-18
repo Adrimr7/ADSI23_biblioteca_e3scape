@@ -66,8 +66,10 @@ def forum():
 
 @app.route('/tema')
 def tema():
-	titulo = request.values.get("titulo", "")
+	titulo = request.values.get("title", "")
+	print(titulo)
 	comentarios = library.get_comentarios(titulo)
+
 	return render_template('tema.html', comentarios=comentarios)
 
 @app.route('/resena')
