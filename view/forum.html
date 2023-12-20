@@ -11,7 +11,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12 my-2">
                 <div class="card d-flex flex-row" style="width: 18rem;">
                     <div class="card-body">
-                        <a href="/tema?title={{tema.title}}"><h5 class="card-title">{{tema.title}}</h5></a>
+                        <a href="/tema?id={{tema.id}}"><h5 class="card-title">{{tema.title}}</h5></a>
                         {% if tema.description: %}
                         <p class="card-text">{{tema.description}}</p>
                         {% endif %}
@@ -25,6 +25,13 @@
     </div>
 
     <hr class="hr" />
+
+    {% if 'user' in request.__dict__ and request.user and request.user.token %}
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/nuevoTema" class="nav-link active" aria-current="page">Nuevo tema</a></li>
+        </ul>
+    {% endif %}
+
 </div>
 
 {% endblock %}

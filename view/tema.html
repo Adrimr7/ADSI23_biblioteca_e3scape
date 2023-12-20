@@ -21,6 +21,16 @@
     </div>
 
     <hr class="hr" />
+
+
+    {% if 'user' in request.__dict__ and request.user and request.user.token %}
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/nuevoComentario?id={{id}}" class="nav-link active" aria-current="page">Comentar</a></li>
+        </ul>
+    {% endif %}
+
+    <p style="visibility: hidden;" ></p>
+
 </div>
 
 {% endblock %}

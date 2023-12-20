@@ -43,17 +43,25 @@ class LibraryController:
 		""")
         temas = []
         for t in res:
-            temas.append(Tema(t[0], t[1], t[2]))
+            temas.append(Tema(t[0], t[1], t[2], t[3]))
         return temas
 
-    def get_comentarios(self, tituloTema):
+    def nuevoTema(self, titulo, descripcion, email):
+        db.insert("INSERT INTO Tema (titulo, emailUser, descTema) VALUES (?, ?, ?)", (titulo, email, descripcion))
 
-        res = db.select("SELECT * FROM Comenta WHERE tituloTema = ?", (tituloTema,))
+    def nuevoComentario(self, comentario, email, idTema):
+        print("id en Libray " + str(idTema))
+        db.insert("INSERT INTO Comenta (mensaje, emailUser, idTema, fechaHora) VALUES (?, ?, ?, datetime('now'))", (comentario, email, idTema))
+
+
+    def get_comentarios(self, idTema):
+
+        res = db.select("SELECT * FROM Comenta WHERE idTema = ? ORDER BY fechaHora", (idTema,))
 
         comentarios = []
         print(comentarios)
         for t in res:
-            comentarios.append(Comenta(t[0], t[1], t[2]))
+            comentarios.append(Comenta(t[0], t[1], t[2], t[3]))
         return comentarios
 
     def get_user(self, email, password):

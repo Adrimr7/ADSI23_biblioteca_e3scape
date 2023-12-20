@@ -90,10 +90,10 @@ cur.execute("""
 
 cur.execute("""
 	CREATE TABLE Tema(
+	    id integer primary key AUTOINCREMENT,
 		titulo varchar(50),
 		emailUser varchar(30),
 		descTema varchar(300),
-		PRIMARY KEY(titulo),
 		FOREIGN KEY(emailUser) REFERENCES User(email)
 	)
 """)
@@ -101,11 +101,12 @@ cur.execute("""
 cur.execute("""
 	CREATE TABLE Comenta(
 		emailUser varchar(30),
-		tituloTema varchar(50),
+		idTema integer,
 		mensaje varchar(300),
-		PRIMARY KEY(emailUser, tituloTema),
+		fechaHora datetime,
+		PRIMARY KEY(fechaHora, idTema),
 		FOREIGN KEY(emailUser) REFERENCES User(email),
-		FOREIGN KEY(tituloTema) REFERENCES Tema(titulo)
+		FOREIGN KEY(idTema) REFERENCES Tema(id)
 	)
 """)
 
@@ -182,11 +183,11 @@ for resena in resenas:
 	con.commit()
 
 for tema in temas:
-	cur.execute(f"""INSERT INTO Tema VALUES ('{tema['titulo']}', '{tema['emailUser']}', '{tema['descTema']}')""")
+	cur.execute(f"""INSERT INTO Tema VALUES (null, '{tema['titulo']}', '{tema['emailUser']}', '{tema['descTema']}')""")
 	con.commit()
 
 for comentario in comentarios:
-	cur.execute(f"""INSERT INTO Comenta VALUES ('{comentario['emailUser']}', '{comentario['tituloTema']}', '{comentario['mensaje']}')""")
+	cur.execute(f"""INSERT INTO Comenta VALUES ('{comentario['emailUser']}', '{comentario['idTema']}', '{comentario['mensaje']}', '{comentario['fechaHora']}')""")
 	con.commit()
 
 #Para cada línea de amigos es necesario primero definir el path, que se define en la línea 13.

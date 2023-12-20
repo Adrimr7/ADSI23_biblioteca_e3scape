@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+
+<form class="form-inline" method="POST">
+  <!-- Titulo input -->
+  <div class="input-group mb-2 mr-sm-2">
+      <label class="col-sm-2 col-form-label" for="titulo">Título</label>
+      <input type="text" id="titulo" name="titulo" class="form-control mb-2" />
+  </div>
+
+  <!-- Descripcion input -->
+  <div class="input-group mb-2 mr-sm-2">
+      <label class="col-sm-2 col-form-label" for="descripcion">Descripción</label>
+      <input type="text" id="descripcion" name="descripcion" class="form-control mb-2" />
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary btn-block mb-4">Publicar</button>
+
+
+</form>
+
+</div>
+{% endblock %}

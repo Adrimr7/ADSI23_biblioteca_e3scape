@@ -66,11 +66,65 @@ def forum():
 
 @app.route('/tema')
 def tema():
-	titulo = request.values.get("title", "")
-	print(titulo)
-	comentarios = library.get_comentarios(titulo)
+	id = request.values.get("id", "")
+	#print(id)
+	comentarios = library.get_comentarios(id)
 
-	return render_template('tema.html', comentarios=comentarios)
+	return render_template('tema.html', comentarios=comentarios, id = id)
+
+@app.route('/nuevoTema', methods=['GET', 'POST'])
+def nuevoTema():
+	if 'user' in dir(request) and request.user and request.user.token:
+		if request.method == 'POST':
+			titulo = request.form['titulo']
+			descripcion = request.form['descripcion']
+			if titulo == "" :
+				return redirect('/')
+
+			library.nuevoTema(titulo, descripcion, request.user.email)
+			return redirect('/forum')
+		return render_template('nuevoTema.html', )
+	return redirect('/')
+
+@app.route('/nuevoComentario', methods=['GET', 'POST'])
+def nuevoComentario():
+	if 'user' in dir(request) and request.user and request.user.token:
+		if request.method == 'POST':
+			comentario = request.form['comentario']
+			id = request.values.get("id", "")
+			print("id en nuevoComentario " + str(id))
+			if comentario == "" :
+				return redirect('/')
+
+			library.nuevoComentario(comentario, request.user.email, id)
+			return redirect('/forum')
+		return render_template('nuevoComentario.html', )
+	return redirect('/')
+
+
+#@app.route('/login', methods=['GET', 'POST'])
+#def login():
+#	if 'user' in dir(request) and request.user and request.user.token:
+#		return redirect('/')
+#	email = request.values.get("email", "")
+#	print(email)
+#	password = request.values.get("password", "")
+#	print(password)
+#	user = library.get_user(email, password)
+#	print(user)
+#	if user:
+#		print(user.email)
+#		print("MailLogin")
+#		session = user.new_session()
+#		resp = redirect("/")
+#		resp.set_cookie('token', session.hash)
+#		resp.set_cookie('time', str(session.time))
+#	else:
+#		if request.method == 'POST':
+#			return redirect('/login')
+#		else:
+#			resp = render_template('login.html')
+#	return resp
 
 @app.route('/resena')
 def resena():
