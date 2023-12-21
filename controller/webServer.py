@@ -57,7 +57,9 @@ def catalogue():
 def book():
 	id = request.values.get("id", "")
 	book = library.get_book(id)
-	return render_template('book.html', book=book)
+	prestado = library.isOnLoan(request.user.email, id)
+	print(prestado)
+	return render_template('book.html', book=book, prestado=prestado)
 
 @app.route('/forum')
 def forum():

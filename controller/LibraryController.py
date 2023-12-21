@@ -93,7 +93,7 @@ class LibraryController:
             sugeridos = self.__getLibrosRandom()
             return sugeridos
         else:
-            users = self.__getUsuariosHaLeido(leidos)
+            users = self.__getUsuariosHaLeido(leidos, user)
             if len(users) <= 0:
                 sugeridos = self.__getLibrosRandom()
                 return sugeridos
@@ -102,7 +102,8 @@ class LibraryController:
                 for u in users:
                     sugeridos.extend(self.__getLibrosLeidos(u[0]))
                     #sugeridos.extend(self.__getLibrosLeidos(u.email))
-                return sugeridos
+                    sugeridosNoR = list(dict.fromkeys(sugeridos))
+                return sugeridosNoR
 
     def __getLibrosLeidos(self, email):
         res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", (email,))
@@ -139,11 +140,11 @@ class LibraryController:
         else:
             return None
 
-    def __getUsuariosHaLeido(self, books):
+    def __getUsuariosHaLeido(self, books, email):
         users = []
         i = 0
         for b in books:
-            res = db.select("SELECT emailUser from Prestar WHERE idLibro = ?", (b,))
+            res = db.select("SELECT emailUser from Prestar WHERE idLibro = ? AND emailUser NOT LIKE ?", (b, email,))
             
             #res = db.select("SELECT emailUser from Prestar WHERE idLibro = ?", (b.id,))
             
@@ -154,6 +155,14 @@ class LibraryController:
                     users.append(userRead)
             i += 1
         return users
+    
+    def isOnLoan(self, email, id):
+        res = db.select("SELECT * FROM Prestar WHERE emailUser LIKE ? AND idLibro = ?", (email, id,))
+        if len(res)>0:
+            return True
+        else:
+            return False
+
 
     """
 	Este método se pensó para hacer inmersion respecto a uno supeior.
