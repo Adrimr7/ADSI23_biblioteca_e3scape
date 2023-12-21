@@ -91,18 +91,29 @@ class LibraryController:
     def obtenerRecomendaciones(self, user):
         leidos = self.__getLibrosLeidos(user)
         if leidos == None:
-            sugeridos = self.__getLibrosRandom()
+            sugeridos = self.__getLibrosRandom(user)
             return sugeridos
         else:
             users = self.__getUsuariosHaLeido(leidos, user)
             if len(users) <= 0:
-                sugeridos = self.__getLibrosRandom()
+                sugeridos = self.__getLibrosRandom(user)
                 return sugeridos
             else:
                 sugeridos = []
                 for u in users:
                     sugeridos.extend(self.__getLibrosLeidos(u.email))
                 sugeridosNoR = self.__deleteRepeated(leidos,sugeridos)
+                
+                """
+                Si hay pocas sugerencias, se puede añadir las top 10
+
+                if len(sugeridosNoR)<10:
+                    sugeridosNoR.extend(self.__getLibrosRandom(user))
+                sugeridosCom = self.__deleteRepeated(leidos,sugeridosNoR)
+                return sugeridosCom
+                
+                """
+                
                 return sugeridosNoR
 
     def __getLibrosLeidos(self, email):
@@ -173,8 +184,19 @@ class LibraryController:
         else:
             return False
 
-    def __getLibrosRandom(self):
-        return None
+    def __getLibrosRandom(self, user):
+        res = db.select("SELECT idLibro,COUNT(idLibro) FROM Prestar GROUP BY idLibro ORDER BY COUNT(idLibro) DESC")
+        if len(res) > 0:
+            books = []
+            count = 0
+            while count<10 and count < len(res):
+                res2 = db.select("SELECT * from Book WHERE id = ?", (res[count][0],))
+                if not self.isOnLoan(user, res[count][0]):
+                    books.append(Book(res2[0][0], res2[0][1], res2[0][2], res2[0][3], res2[0][4]))
+                count += 1
+            return books
+        else:
+            return None
 
     def get_amigos(self, email):
         selectAmigos = db.select("SELECT * from SonAmigos WHERE emailUser1 = ? OR emailuser2 = ?", (email, email))
