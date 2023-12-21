@@ -101,8 +101,9 @@ class LibraryController:
             else:
                 sugeridos = []
                 for u in users:
-                    sugeridos.extend(self.__getLibrosLeidosOthers(u.email, leidos))
-                return sugeridos
+                    sugeridos.extend(self.__getLibrosLeidos(u.email))
+                sugeridosNoR = self.__deleteRepeated(leidos,sugeridos)
+                return sugeridosNoR
 
     def __getLibrosLeidos(self, email):
         res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", (email,))
@@ -115,16 +116,13 @@ class LibraryController:
         else:
             return None
         
-    def __getLibrosLeidosOthers(self, emailOther, leidos):
-        res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", (emailOther,))
-
-        if len(res) > 0:
-            books = []
-            for i in res:
-                if not self.__isRepeated(leidos, i[1]):
-                    res2 = db.select("SELECT * from Book WHERE id = ?", (i[1],))
-                    books.append(Book(res2[0][0], res2[0][1], res2[0][2], res2[0][3], res2[0][4]))
-            return books
+    def __deleteRepeated(self, leidos, sugeridos):
+        if len(leidos) > 0 and len(sugeridos) > 0:
+            for i in sugeridos:
+                if self.__isRepeated(leidos, i.id):
+                    sugeridos.remove(i)
+                    
+            return sugeridos
         else:
             return None
         
