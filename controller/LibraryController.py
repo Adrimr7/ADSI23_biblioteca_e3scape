@@ -120,7 +120,7 @@ class LibraryController:
         if len(leidos) > 0 and len(sugeridos) > 0:
             res = []
             for i in sugeridos:
-                if not self._isRead(leidos, i.id) and not self._isRead(res, i.id):
+                if not self.__isRead(leidos, i.id) and not self.__isRead(res, i.id):
                     res.append(i)
 
             return res
