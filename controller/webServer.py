@@ -35,8 +35,7 @@ def index():
 	if 'user' in dir(request) and request.user and request.user.token:
 		recomendaciones = library.obtenerRecomendaciones(request.user.email)
 		booksRec = []
-		if recomendaciones != None:
-			return render_template('index.html', recomendaciones=recomendaciones)
+		return render_template('index.html', recomendaciones=recomendaciones)
 	else:
 		return render_template('index.html')
 
