@@ -104,7 +104,6 @@ class LibraryController:
                 return sugeridos
 
     def __getLibrosLeidos(self, email):
-        print(email)
         res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", (email,))
         
         if len(res) > 0:
