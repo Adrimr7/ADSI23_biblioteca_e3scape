@@ -157,7 +157,7 @@ class LibraryController:
         return users
     
     def isOnLoan(self, email, id):
-        res = db.select("SELECT * FROM Prestar WHERE emailUser LIKE ? AND idLibro = ?", (email, id,))
+        res = db.select("SELECT * FROM Prestar WHERE emailUser LIKE ? AND idLibro = ? AND fechaFin =''", (email, id,))
         if len(res)>0:
             return True
         else:
