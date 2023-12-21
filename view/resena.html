@@ -12,13 +12,14 @@
                 <h5 class="card-title">{{resena.libro.title}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{resena.valoracion}}</h6>
                 <p class="card-text">{{resena.resena}}</p>
+            </div>
         </div>
     </div>
     <br>
     <div style="width: 65rem;">
-        <a href="/catalogue"><button type="submit" id="SignUpButton" class="btn btn-primary">Volver</button></a>
+        <a href="/resenas"><button type="submit" id="Volver" class="btn btn-primary">Volver</button></a>
         <!--return available only in case of loan-->
-        <a href=""><button type="submit" id="SignUpButton" class="btn btn-primary">Editar Reseña</button></a>
+        <a href="/editarResena?id={{resena.libro.id}}"><button type="submit" id="Editar" class="btn btn-primary">Editar Reseña</button></a>
     </div>
 
 </div>

@@ -50,9 +50,10 @@ class LibraryController:
         db.insert("INSERT INTO Tema (titulo, emailUser, descTema) VALUES (?, ?, ?)", (titulo, email, descripcion))
 
     def nuevoComentario(self, comentario, email, idTema):
-        print("id en Libray " + str(idTema))
         db.insert("INSERT INTO Comenta (mensaje, emailUser, idTema, fechaHora) VALUES (?, ?, ?, datetime('now'))", (comentario, email, idTema))
 
+    def editarResena(self, resena, email, idLibro, valoracion):
+        db.update("UPDATE Reseña SET valoracion = ?, resena = ? WHERE idLibro = ? AND emailUser = ?",(valoracion, resena, idLibro, email ))
 
     def get_comentarios(self, idTema):
 
