@@ -81,6 +81,7 @@ class LibraryController:
             return None
 
     def get_book(self, id):
+        print(type(id))
         book = db.select("SELECT * from Book WHERE id = ?", (id,))
         if len(book) > 0:
             return Book(book[0][0], book[0][1], book[0][2], book[0][3], book[0][4])
@@ -100,26 +101,43 @@ class LibraryController:
             else:
                 sugeridos = []
                 for u in users:
-                    sugeridos.extend(self.__getLibrosLeidos(u[0]))
-                    #sugeridos.extend(self.__getLibrosLeidos(u.email))
-                    sugeridosNoR = list(dict.fromkeys(sugeridos))
-                return sugeridosNoR
+                    sugeridos.extend(self.__getLibrosLeidosOthers(u.email, leidos))
+                return sugeridos
 
     def __getLibrosLeidos(self, email):
         res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", (email,))
+        if len(res) > 0:
+            books = []
+            for i in res:
+                res2 = db.select("SELECT * from Book WHERE id = ?", (i[1],))
+                books.append(Book(res2[0][0], res2[0][1], res2[0][2], res2[0][3], res2[0][4]))
+            return books
+        else:
+            return None
+        
+    def __getLibrosLeidosOthers(self, emailOther, leidos):
+        res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", (emailOther,))
 
         if len(res) > 0:
             books = []
             for i in res:
-                """
-                res2 = db.select("SELECT * from Book WHERE id = ?", (i[1],))
-                books.append(new Book(res[0], res[1], res[2], res[3], res[4]))
-                """                
-                books.append(i[1])
+                if not self.__isRepeated(leidos, i[1]):
+                    res2 = db.select("SELECT * from Book WHERE id = ?", (i[1],))
+                    books.append(Book(res2[0][0], res2[0][1], res2[0][2], res2[0][3], res2[0][4]))
             return books
         else:
             return None
-
+        
+    def __isRepeated(self, leidos, id):
+        found = False
+        i = 0
+        while not found and i<len(leidos):
+            if leidos[i].id == id:
+                found = True
+            else:
+                i+=1
+        return found
+            
     def get_resenas(self, email):
 
         res = db.select("SELECT * from Reseña WHERE emailUser = ?", (email,))
@@ -144,15 +162,11 @@ class LibraryController:
         users = []
         i = 0
         for b in books:
-            res = db.select("SELECT emailUser from Prestar WHERE idLibro = ? AND emailUser NOT LIKE ?", (b, email,))
-            
-            #res = db.select("SELECT emailUser from Prestar WHERE idLibro = ?", (b.id,))
-            
+            res = db.select("SELECT emailUser from Prestar WHERE idLibro = ? AND emailUser NOT LIKE ?", (b.id, email,))
             if len(res) > 0:
                 for userRead in res:
-                    #res2 = db.select("SELECT * from User WHERE email = ?", (userRead,))
-                    #users.append(new User(userRead, res2[1], res2[3]))
-                    users.append(userRead)
+                    res2 = db.select("SELECT * from User WHERE email = ?", (userRead[0],))
+                    users.append(User(userRead[0], res2[0][1], res2[0][3]))
             i += 1
         return users
     
@@ -162,27 +176,6 @@ class LibraryController:
             return True
         else:
             return False
-
-
-    """
-	Este método se pensó para hacer inmersion respecto a uno supeior.
-	El superior recibe un único usuario.
-	Este recibo una lista de usuario.
-	Debido a que no se especifica en la cabecera el tipo, se ha descartado el desarrollo.
-	Solución: por cada usuario se llama al método de arriba
-	
-	def __getLibrosLeidos(self, users):
-		leidos = []
-		i = 0
-		for u in users:
-			res = db.select("SELECT * from Prestar WHERE emailUser = ?", (u[i].email,))
-
-			if len(res) > 0:
-				for b in res:
-					leidos.append(Book(res[0],res[1],res[2],res[3],res[4]))
-			i += 1
-		return leidos
-	"""
 
     def __getLibrosRandom(self):
         return None

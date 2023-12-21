@@ -29,6 +29,8 @@ con.commit()
 
 cur.execute(f"""INSERT INTO Prestar VALUES ('admin@gmail.com', '2', '2023-11-27 19:32:57', '')""")
 con.commit()
+cur.execute(f"""INSERT INTO Prestar VALUES ('admin@gmail.com', '19', '2023-11-27 19:32:57', '')""")
+con.commit()
 
 
 

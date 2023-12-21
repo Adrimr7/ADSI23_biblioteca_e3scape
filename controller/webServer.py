@@ -36,9 +36,7 @@ def index():
 		recomendaciones = library.obtenerRecomendaciones(request.user.email)
 		booksRec = []
 		if recomendaciones != None:
-			for book in recomendaciones:
-				booksRec.append(library.get_book(book))
-		return render_template('index.html', recomendaciones=booksRec)
+			return render_template('index.html', recomendaciones=recomendaciones)
 	else:
 		return render_template('index.html')
 
