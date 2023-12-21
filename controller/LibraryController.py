@@ -50,6 +50,14 @@ class LibraryController:
 
     def get_tema(self, id):
 
+        try:
+            int(id)
+        except (ValueError, TypeError):
+            id = -1
+
+        if(id == -1):
+            return 0
+
         t = db.select(" SELECT * FROM Tema WHERE id = ?", (id))
 
         tema = 0
