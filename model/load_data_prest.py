@@ -17,19 +17,21 @@ cur = con.cursor()
 ###cur.execute(f"""DELETE FROM User WHERE name LIKE '2'""")
 ###con.commit()
 
+cur.execute(f"""DELETE FROM Prestar""")
+con.commit()
 cur.execute(f"""INSERT INTO Prestar VALUES ('jhon@gmail.com', '2', '2023-11-23 12:00:57', '')""")
 con.commit()
-
 cur.execute(f"""INSERT INTO Prestar VALUES ('juan@gmail.com', '2', '2023-11-27 19:32:57', '')""")
 con.commit()
 cur.execute(f"""INSERT INTO Prestar VALUES ('juan@gmail.com', '5', '2023-11-27 19:32:57', '')""")
 con.commit()
 cur.execute(f"""INSERT INTO Prestar VALUES ('juan@gmail.com', '7', '2023-11-27 19:32:57', '')""")
 con.commit()
-
-cur.execute(f"""INSERT INTO Prestar VALUES ('admin@gmail.com', '2', '2023-11-27 19:32:57', '')""")
+cur.execute(f"""INSERT INTO Prestar VALUES ('admin@gmail.com', '5', '2023-11-27 19:32:57', '')""")
 con.commit()
 cur.execute(f"""INSERT INTO Prestar VALUES ('admin@gmail.com', '19', '2023-11-27 19:32:57', '')""")
+con.commit()
+cur.execute(f"""INSERT INTO Prestar VALUES ('admin@gmail.com', '2', '2023-11-27 19:32:57', '')""")
 con.commit()
 
 

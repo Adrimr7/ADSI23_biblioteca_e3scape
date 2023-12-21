@@ -99,7 +99,7 @@ class TestRecomendaciones(BaseTestClass):
 		res = self.client.get('/')
 		page = BeautifulSoup(res.data, features="html.parser")
 		#Comprobamos que, con los datos insertados a la BD, sean 5 las sugerencias.
-		self.assertEqual(5,len(page.find_all('h5', class_='card-title')))
+		self.assertEqual(4,len(page.find_all('h5', class_='card-title')))
 
 
 	def test_conRecomendacionesRepetidas(self):

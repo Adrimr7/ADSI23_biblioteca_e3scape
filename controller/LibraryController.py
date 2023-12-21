@@ -118,22 +118,23 @@ class LibraryController:
         
     def __deleteRepeated(self, leidos, sugeridos):
         if len(leidos) > 0 and len(sugeridos) > 0:
+            res = []
             for i in sugeridos:
-                if self.__isRepeated(leidos, i.id):
-                    sugeridos.remove(i)
-                    
-            return sugeridos
+                if not self._isRead(leidos, i.id) and not self._isRead(res, i.id):
+                    res.append(i)
+
+            return res
         else:
             return None
-        
-    def __isRepeated(self, leidos, id):
+
+    def __isRead(self, leidos, id):
         found = False
         i = 0
-        while not found and i<len(leidos):
+        while not found and i < len(leidos):
             if leidos[i].id == id:
                 found = True
             else:
-                i+=1
+                i += 1
         return found
             
     def get_resenas(self, email):
@@ -146,13 +147,10 @@ class LibraryController:
 
     def getResena(self, idLibro, email):
         res = db.select("SELECT * from Reseña WHERE idLibro = ? AND emailUser = ?", (idLibro, email))
-        lib = db.select("SELECT * from Book WHERE id = ?", (idLibro,))
 
-        if len(res) > 0 and len(lib) > 0:
+        if len(res) > 0:
             resena = Resena(res[0][0], res[0][1], res[0][2], res[0][3])
-            libro = Book(lib[0][0], lib[0][1], lib[0][2], lib[0][3], lib[0][4])
-            return (resena, libro)
-
+            return resena
         else:
             return None
 

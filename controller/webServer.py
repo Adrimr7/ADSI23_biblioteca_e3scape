@@ -130,15 +130,21 @@ def nuevoComentario():
 
 @app.route('/resena')
 def resena():
-	id = request.values.get("id", "")
-	resena, libro = library.getResena(id, request.user.email)
-	return render_template('resena.html', book = libro, resena = resena)
+	if 'user' in dir(request) and request.user and request.user.token:
+		id = request.values.get("idLibro", "")
+		resena = library.getResena(id, request.user.email)
+		return render_template('resena.html', resena=resena)
+	return redirect("/")
+
 
 @app.route('/resenas')
 def resenas():
-	email = request.user.email
-	resenas = library.get_resenas(email)
-	return render_template('resenas.html', resenas=resenas)
+	if 'user' in dir(request) and request.user and request.user.token:
+		email = request.user.email
+		resenas = library.get_resenas(email)
+		return render_template('resenas.html', resenas=resenas)
+	return redirect("/")
+
 
 @app.route('/amigos')
 def amigos():
