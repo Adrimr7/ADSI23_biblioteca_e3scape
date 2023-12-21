@@ -69,9 +69,13 @@ def tema():
 	id = request.values.get("id", "")
 	#print(id)
 	if id != "":
+		tema = library.get_tema(id)
+
+		if tema == 0:
+			return redirect('/')
 		comentarios = library.get_comentarios(id)
 
-		return render_template('tema.html', comentarios=comentarios, id = id)
+		return render_template('tema.html', comentarios=comentarios, tema = tema)
 	return redirect('/forum')
 
 @app.route('/nuevoTema', methods=['GET', 'POST'])

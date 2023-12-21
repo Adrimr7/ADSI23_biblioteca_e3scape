@@ -5,6 +5,10 @@
 
     <hr class="hr" />
 
+    <h1>{{tema.title}}</h1>
+
+    <h3>{{tema.description}}</h3>
+
 
     <div class="row">
 
@@ -12,7 +16,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 my-1">
                 <div class="card">
                     <div class="card-header">
-                        {{comentario.emailUser}}
+                        {{comentario.user.username}}
                     </div>
                     <div class="card-body">
                         {{comentario.mensaje}}
@@ -31,7 +35,7 @@
 
     {% if 'user' in request.__dict__ and request.user and request.user.token %}
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/nuevoComentario?id={{id}}" class="nav-link active" aria-current="page">Comentar</a></li>
+            <li class="nav-item"><a href="/nuevoComentario?id={{tema.id}}" class="nav-link active" aria-current="page">Comentar</a></li>
         </ul>
     {% endif %}
 

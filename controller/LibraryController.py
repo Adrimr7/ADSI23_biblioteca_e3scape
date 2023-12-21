@@ -46,6 +46,18 @@ class LibraryController:
             temas.append(Tema(t[0], t[1], t[2], t[3]))
         return temas
 
+
+
+    def get_tema(self, id):
+
+        t = db.select(" SELECT * FROM Tema WHERE id = ?", (id))
+
+        tema = 0
+        if(len(t) > 0):
+            tema = Tema(t[0][0], t[0][1], t[0][2], t[0][3])
+
+        return tema
+
     def nuevoTema(self, titulo, descripcion, email):
         db.insert("INSERT INTO Tema (titulo, emailUser, descTema) VALUES (?, ?, ?)", (titulo, email, descripcion))
 
