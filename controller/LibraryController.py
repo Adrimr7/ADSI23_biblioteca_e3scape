@@ -100,11 +100,12 @@ class LibraryController:
             else:
                 sugeridos = []
                 for u in users:
-                    sugeridos.extend(self.__getLibrosLeidos(u))
+                    sugeridos.extend(self.__getLibrosLeidos(u[0]))
                 return sugeridos
 
     def __getLibrosLeidos(self, email):
-        res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", ('john@gmail.com',))
+        print(email)
+        res = db.select("SELECT * from Prestar WHERE emailUser LIKE ?", (email,))
         
         if len(res) > 0:
             books = []
