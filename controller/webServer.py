@@ -69,9 +69,13 @@ def tema():
 	id = request.values.get("id", "")
 	#print(id)
 	if id != "":
+		tema = library.get_tema(id)
+
+		if tema == 0:
+			return redirect('/')
 		comentarios = library.get_comentarios(id)
 
-		return render_template('tema.html', comentarios=comentarios, id = id)
+		return render_template('tema.html', comentarios=comentarios, tema = tema)
 	return redirect('/forum')
 
 @app.route('/nuevoTema', methods=['GET', 'POST'])
@@ -94,13 +98,31 @@ def nuevoComentario():
 		if request.method == 'POST':
 			comentario = request.form['comentario']
 			id = request.values.get("id", "")
-			print("id en nuevoComentario " + str(id))
 			if comentario == "" :
 				return redirect('/')
 
 			library.nuevoComentario(comentario, request.user.email, id)
 			return redirect('/forum')
 		return render_template('nuevoComentario.html', )
+	return redirect('/')
+
+@app.route('/editarResena', methods=['GET', 'POST'])
+def editarResena():
+	if 'user' in dir(request) and request.user and request.user.token:
+		if request.method == 'POST':
+			resena = request.form['resena']
+			valoracion = float(request.form['valoracion'])
+			if valoracion < 0:
+				valoracion = 0
+			if valoracion > 10:
+				valoracion = 10
+			id = request.values.get("id", "")
+			if resena == "" :
+				return redirect('/resenas')
+
+			library.editarResena(resena, request.user.email, id, valoracion)
+			return redirect('/resenas')
+		return render_template('editarResena.html', )
 	return redirect('/')
 
 

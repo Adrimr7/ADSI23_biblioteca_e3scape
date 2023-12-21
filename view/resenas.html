@@ -2,20 +2,7 @@
 
 {% block content %}
 <div class="container p-5 my-5 border">
-
-    <form class="form-inline">
-      <div class="input-group mb-2 mr-sm-2">
-        <label for="title" class="col-sm-2 col-form-label">Titulo</label>
-        <input type="text" class="form-control mb-2" id="title" name="title" placeholder="Escribe el titulo que deseas buscar" {% if title != "": %}value="{{title}}"{% endif %}>
-      </div>
-      <button type="submit" class="btn btn-primary">
-          <i class="fa fa-search"></i>
-          Search
-      </button>
-    </form>
-
     <hr class="hr" />
-
     <div class="row">
 
         {% for resena in resenas %}
