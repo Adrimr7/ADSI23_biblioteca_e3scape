@@ -35,8 +35,7 @@ def index():
 	if 'user' in dir(request) and request.user and request.user.token:
 		recomendaciones = library.obtenerRecomendaciones(request.user.email)
 		booksRec = []
-		if recomendaciones != None:
-			return render_template('index.html', recomendaciones=recomendaciones)
+		return render_template('index.html', recomendaciones=recomendaciones)
 	else:
 		return render_template('index.html')
 
@@ -110,13 +109,22 @@ def nuevoComentario():
 def editarResena():
 	if 'user' in dir(request) and request.user and request.user.token:
 		if request.method == 'POST':
+			id = request.values.get("id", "")
 			resena = request.form['resena']
-			valoracion = float(request.form['valoracion'])
+			if resena == "":
+				resena = library.getResena(id, request.user.email).resena
+			valoracion = request.form['valoracion']
+			try:
+				float(valoracion)
+			except (ValueError, TypeError):
+				valoracion = -1
+
+			if valoracion == -1:
+				valoracion = library.getResena(id, request.user.email).valoracion
 			if valoracion < 0:
 				valoracion = 0
 			if valoracion > 10:
 				valoracion = 10
-			id = request.values.get("id", "")
 			if resena == "" :
 				return redirect('/resenas')
 

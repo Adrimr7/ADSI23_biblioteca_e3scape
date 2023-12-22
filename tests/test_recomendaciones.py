@@ -69,8 +69,8 @@ class TestRecomendaciones(BaseTestClass):
 		#Obtenemos el renderizado de la página.
 		res = self.client.get('/')
 		page = BeautifulSoup(res.data, features="html.parser")
-		#Comprobamos que, con los datos insertados a la BD, no haya sugerencias.
-		self.assertEqual(0,len(page.find_all('h5', class_='card-title')))
+		#Comprobamos que, con los datos insertados a la BD, no haya sugerencias. Sin embargo, serán 5 porque se aplican las random (top 10)
+		self.assertEqual(5,len(page.find_all('h5', class_='card-title')))
 
 
 	def test_conRecomendaciones(self):
@@ -98,7 +98,7 @@ class TestRecomendaciones(BaseTestClass):
 		#Obtenemos el renderizado de la página.
 		res = self.client.get('/')
 		page = BeautifulSoup(res.data, features="html.parser")
-		#Comprobamos que, con los datos insertados a la BD, sean 5 las sugerencias.
+		#Comprobamos que, con los datos insertados a la BD, sean 4 las sugerencias.
 		self.assertEqual(4,len(page.find_all('h5', class_='card-title')))
 
 
@@ -127,9 +127,33 @@ class TestRecomendaciones(BaseTestClass):
 		#Obtenemos el renderizado de la página.
 		res = self.client.get('/')
 		page = BeautifulSoup(res.data, features="html.parser")
-		#Comprobamos que, con los datos insertados a la BD, sean 5 las sugerencias.
+		#Comprobamos que, con los datos insertados a la BD, sean 3 las sugerencias.
 		self.assertEqual(3,len(page.find_all('h5', class_='card-title')))
-	#...
+	
+
+	def test_recomendacionesRandom(self):
+		#El resultado deberían de ser todas las sugerencias sin repetir ninguna, es decir, 3.
+		cur.execute(f"""DELETE FROM Prestar""")
+		con.commit()
+		cur.execute(f"""INSERT INTO Prestar VALUES ('jhon@gmail.com', '2', '2023-11-23 12:00:57', '')""")
+		con.commit()
+		cur.execute(f"""INSERT INTO Prestar VALUES ('juan@gmail.com', '2', '2023-11-27 19:32:57', '')""")
+		con.commit()
+		cur.execute(f"""INSERT INTO Prestar VALUES ('juan@gmail.com', '5', '2023-11-27 19:32:57', '')""")
+		con.commit()
+		cur.execute(f"""INSERT INTO Prestar VALUES ('juan@gmail.com', '7', '2023-11-27 19:32:57', '')""")
+		con.commit()
+		cur.execute(f"""INSERT INTO Prestar VALUES ('admin@gmail.com', '19', '2023-11-27 19:32:57', '')""")
+		con.commit()
+
+		#Iniciamos sesión para poder llegar al renderizado de recomendaciones.
+		#No se comprueba aquí el inicio de sesión puesto que pertenece a otro módulo (test_login.py)
+		res = self.login('admin@gmail.com', 'admin')
+		#Obtenemos el renderizado de la página.
+		res = self.client.get('/')
+		page = BeautifulSoup(res.data, features="html.parser")
+		#Comprobamos que, con los datos insertados a la BD, sean 3 las sugerencias, porque una (la 19) ya la tenemos prestada.
+		self.assertEqual(3,len(page.find_all('h5', class_='card-title')))
 
 
 
