@@ -98,7 +98,7 @@ class TestRecomendaciones(BaseTestClass):
 		#Obtenemos el renderizado de la página.
 		res = self.client.get('/')
 		page = BeautifulSoup(res.data, features="html.parser")
-		#Comprobamos que, con los datos insertados a la BD, sean 5 las sugerencias.
+		#Comprobamos que, con los datos insertados a la BD, sean 4 las sugerencias.
 		self.assertEqual(4,len(page.find_all('h5', class_='card-title')))
 
 
