@@ -6,6 +6,14 @@
     },
     {
 		"emailUser1": "jhon@gmail.com",
+		"emailUser2": "amigojhon@gmail.com"
+    },
+    {
+		"emailUser1": "juan@gmail.com",
+		"emailUser2": "amigojuan@gmail.com"
+    },
+    {
+		"emailUser1": "jhon@gmail.com",
 		"emailUser2": "admin@gmail.com"
     }
   ]

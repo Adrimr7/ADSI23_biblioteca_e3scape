@@ -13,6 +13,18 @@
       "admin": false
     },
     {
+      "nombres": "Amigo Juan",
+      "email": "amigojuan@gmail.com",
+      "password": "123",
+      "admin": false
+    },
+    {
+      "nombres": "Amigo Jhon",
+      "email": "amigojhon@gmail.com",
+      "password": "123",
+      "admin": false
+    },
+    {
       "nombres": "Admin Admin",
       "email": "admin@gmail.com",
       "password": "admin",
