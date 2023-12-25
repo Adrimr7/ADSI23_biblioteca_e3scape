@@ -46,8 +46,6 @@ class LibraryController:
             temas.append(Tema(t[0], t[1], t[2], t[3]))
         return temas
 
-
-
     def get_tema(self, id):
 
         try:
@@ -55,15 +53,15 @@ class LibraryController:
         except (ValueError, TypeError):
             id = -1
 
-        if(id == -1):
+        if (id == -1):
             return 0
 
         id = str(id)
 
-        t = db.select(" SELECT * FROM Tema WHERE id = ?", (id, ))
+        t = db.select(" SELECT * FROM Tema WHERE id = ?", (id,))
 
         tema = 0
-        if(len(t) > 0):
+        if (len(t) > 0):
             tema = Tema(t[0][0], t[0][1], t[0][2], t[0][3])
 
         return tema
@@ -72,10 +70,12 @@ class LibraryController:
         db.insert("INSERT INTO Tema (titulo, emailUser, descTema) VALUES (?, ?, ?)", (titulo, email, descripcion))
 
     def nuevoComentario(self, comentario, email, idTema):
-        db.insert("INSERT INTO Comenta (mensaje, emailUser, idTema, fechaHora) VALUES (?, ?, ?, datetime('now'))", (comentario, email, idTema))
+        db.insert("INSERT INTO Comenta (mensaje, emailUser, idTema, fechaHora) VALUES (?, ?, ?, datetime('now'))",
+                  (comentario, email, idTema))
 
     def editarResena(self, resena, email, idLibro, valoracion):
-        db.update("UPDATE Reseña SET valoracion = ?, resena = ? WHERE idLibro = ? AND emailUser = ?",(valoracion, resena, idLibro, email ))
+        db.update("UPDATE Reseña SET valoracion = ?, resena = ? WHERE idLibro = ? AND emailUser = ?",
+                  (valoracion, resena, idLibro, email))
 
     def get_comentarios(self, idTema):
 
@@ -125,8 +125,8 @@ class LibraryController:
                 sugeridos = []
                 for u in users:
                     sugeridos.extend(self.__getLibrosLeidos(u.email))
-                sugeridosNoR = self.__deleteRepeated(leidos,sugeridos)
-                
+                sugeridosNoR = self.__deleteRepeated(leidos, sugeridos)
+
                 """
                 Si hay pocas sugerencias, se puede añadir las top 10
 
@@ -136,7 +136,7 @@ class LibraryController:
                 return sugeridosCom
                 
                 """
-                
+
                 return sugeridosNoR
 
     def __getLibrosLeidos(self, email):
@@ -149,7 +149,7 @@ class LibraryController:
             return books
         else:
             return None
-        
+
     def __deleteRepeated(self, leidos, sugeridos):
         if len(leidos) > 0 and len(sugeridos) > 0:
             res = []
@@ -170,7 +170,7 @@ class LibraryController:
             else:
                 i += 1
         return found
-            
+
     def get_resenas(self, email):
 
         res = db.select("SELECT * from Reseña WHERE emailUser = ?", (email,))
@@ -199,10 +199,10 @@ class LibraryController:
                     users.append(User(userRead[0], res2[0][1], res2[0][3]))
             i += 1
         return users
-    
+
     def isOnLoan(self, email, id):
         res = db.select("SELECT * FROM Prestar WHERE emailUser LIKE ? AND idLibro = ? AND fechaFin =''", (email, id,))
-        if len(res)>0:
+        if len(res) > 0:
             return True
         else:
             return False
@@ -212,7 +212,7 @@ class LibraryController:
         if len(res) > 0:
             books = []
             count = 0
-            while count<10 and count < len(res):
+            while count < 10 and count < len(res):
                 res2 = db.select("SELECT * from Book WHERE id = ?", (res[count][0],))
                 if not self.isOnLoan(user, res[count][0]):
                     books.append(Book(res2[0][0], res2[0][1], res2[0][2], res2[0][3], res2[0][4]))
@@ -232,9 +232,12 @@ class LibraryController:
         return amigos
 
     def get_nombreuser(self, email):
-        selectNombre = db.select("SELECT name from User WHERE emailUser = ?", (email))
+        selectNombre = db.select("SELECT name from User WHERE emailUser = ?", (email, ))
         return selectNombre
 
+    def getSolicitudes(self, email):
+        selectSolicitudes = db.select("SELECT emailUser2 from solicita WHERE emailUser1 = ?", (email, ))
+        return selectSolicitudes
 
     def esAdmin(self, email):
         es = db.select("SELECT admin from USER WHERE email = ?", (email,))

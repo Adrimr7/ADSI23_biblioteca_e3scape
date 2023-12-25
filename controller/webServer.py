@@ -180,6 +180,12 @@ def amigos():
 	amigos = library.get_amigos(email)
 	return render_template('amigos.html', amigos=amigos)
 
+@app.route('/solicitudes')
+def solicitudes():
+	email = request.values.get("email", "")
+	solicitudes = library.getSolicitudes(email)
+	return render_template('solicitudes.html', solicitudes=solicitudes)
+
 @app.route('/admin')
 def admin():
 	#Comprobamos si el usuario ha iniciado sesion
