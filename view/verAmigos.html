@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+    <h2> Amigos de <i>{{usuario}}</i></h2>
+    <div class="row">
+         {% for amigo in amigos %}
+            <div class="col-lg-4 col-md-6 col-sm-12 my-2">
+                <div class="card d-flex flex-row" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{amigo}}</h5>
+                    </div>
+                </div>
+            </div>
+         {% endfor %}
+    </div>
+    <a href="/solicitudes"><button type="submit" id="botonVerSolicitudes" class="btn btn-primary">Ver Solicitudes</button></a>
+    <a href="/amigos"><button type="submit" id="botonMenuAmigos" class="btn btn-primary">Ir al menú principal</button></a>
+</div>
+
+{% endblock %}

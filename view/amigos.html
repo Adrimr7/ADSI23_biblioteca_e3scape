@@ -2,8 +2,17 @@
 
 {% block content %}
 <div class="container p-5 my-5 border">
-    <h1> En proceso </h1>
+    <h3> Enviar solicitud de amistad</h3>
+    <form class="form-inline" method="POST">
+        <div class="input-group mb-2 mr-sm-2">
+            <label class="col-sm-2 col-form-label" for="solicitarAmigo">Email del usuario</label>
+            <input type="text" id="solicitarAmigo" name="solicitarAmigo" class="form-control mb-2" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Solicitar</button>
+    </form>
     <a href="/solicitudes"><button type="submit" id="botonVerSolicitudes" class="btn btn-primary">Ver Solicitudes</button></a>
+    <a href="/verAmigos"><button type="submit" id="botonVerAmigos" class="btn btn-primary">Ver Amigos</button></a>
+
 </div>
 
 {% endblock %}

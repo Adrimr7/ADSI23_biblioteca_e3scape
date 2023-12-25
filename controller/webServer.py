@@ -174,17 +174,25 @@ def resenas():
 	return redirect("/")
 
 
-@app.route('/amigos')
+@app.route('/amigos',  methods=['GET', 'POST'])
 def amigos():
-	email = request.values.get("email", "")
-	amigos = library.get_amigos(email)
-	return render_template('amigos.html', amigos=amigos)
+	if request.method == 'POST':
+		return redirect('/')
+	elif request.method == 'GET':
+		return render_template('amigos.html')
 
 @app.route('/solicitudes')
 def solicitudes():
 	email = request.values.get("email", "")
 	solicitudes = library.getSolicitudes(email)
 	return render_template('solicitudes.html', solicitudes=solicitudes)
+
+@app.route('/verAmigos')
+def verAmigos():
+	email = request.user.email
+	amigos = library.get_amigos(email)
+	usuario = request.user.username
+	return render_template('verAmigos.html', amigos=amigos, usuario=usuario)
 
 @app.route('/admin')
 def admin():
