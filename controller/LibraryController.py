@@ -1,5 +1,6 @@
 from model import Connection, Book, User, Tema, Resena, Comenta
 from model.tools import hash_password
+import re
 
 db = Connection()
 
@@ -232,12 +233,34 @@ class LibraryController:
         return amigos
 
     def get_nombreuser(self, email):
-        selectNombre = db.select("SELECT name from User WHERE emailUser = ?", (email, ))
+        selectNombre = db.select("SELECT name from User WHERE emailUser = ?", (email,))
         return selectNombre
 
     def getSolicitudes(self, email):
-        selectSolicitudes = db.select("SELECT emailUser2 from solicita WHERE emailUser1 = ?", (email, ))
-        return selectSolicitudes
+        selectSolicitudes = db.select("SELECT * from solicita WHERE emailUser2 = ?", (email,))
+        listaSolic = []
+        for solicitud in selectSolicitudes:
+            print(solicitud[0])
+            listaSolic.append(solicitud[0])
+        return listaSolic
+
+    def enviarSolicitud(self, emailUsuario, emailObjetivo):
+        patronEmail = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,3}$'
+        bien = False
+        if re.match(patronEmail, emailObjetivo):
+            solicitudes = db.select("SELECT emailUser1 from solicita WHERE emailUser2= ?", (emailObjetivo,))
+            if not solicitudes:
+                db.insert("INSERT INTO solicita VALUES (?,?)", (emailUsuario, emailObjetivo))
+                bien = True
+        print(f'Lo hace bien', bien)
+        return bien
+
+    def rechazarSolicitud(self, emailUsuario, emailSolicitud):
+        db.delete("DELETE FROM solicita WHERE emailUser1 = ? AND emailUser2 = ?", (emailUsuario, emailSolicitud))
+
+    def aceptarSolicitud(self, emailUsuario, emailSolicitud):
+        db.insert("INSERT INTO SonAmigos VALUES (?,?)", (emailUsuario, emailSolicitud))
+        self.rechazarSolicitud(emailUsuario, emailSolicitud)
 
     def esAdmin(self, email):
         es = db.select("SELECT admin from USER WHERE email = ?", (email,))

@@ -1,6 +1,5 @@
 from .LibraryController import LibraryController
 from flask import Flask, render_template, request, make_response, redirect
-
 app = Flask(__name__, static_url_path='', static_folder='../view/static', template_folder='../view/')
 
 
@@ -174,26 +173,42 @@ def resenas():
 	return redirect("/")
 
 
-@app.route('/amigos',  methods=['GET', 'POST'])
+@app.route('/amigos', methods=['GET', 'POST'])
 def amigos():
-	if request.method == 'POST':
-		return redirect('/')
-	elif request.method == 'GET':
+	if 'user' in dir(request) and request.user and request.user.token:
+		if request.method == 'POST':
+			emailUsuario = request.user.email
+			emailSolicitud = request.form['solicitarAmigo']
+			print(emailSolicitud)
+			estaBien = library.enviarSolicitud(emailUsuario, emailSolicitud)
+			if estaBien:
+				print(estaBien)
+				return redirect('/amigos')
 		return render_template('amigos.html')
-
-@app.route('/solicitudes')
+	return redirect('/')
+@app.route('/solicitudes', methods=['GET', 'POST'])
 def solicitudes():
-	email = request.values.get("email", "")
-	solicitudes = library.getSolicitudes(email)
-	return render_template('solicitudes.html', solicitudes=solicitudes)
-
+	if 'user' in dir(request) and request.user and request.user.token:
+		email = request.user.email
+		if request.method == 'POST':
+			emailSolicitud = request.form.get('emailSolicitud', None)
+			if 'aceptar' in request.form:
+				library.aceptarSolicitud(email, emailSolicitud)
+			elif 'rechazar' in request.form:
+				library.rechazarSolicitud(email, emailSolicitud)
+		solicitudes = library.getSolicitudes(email)
+		print(email)
+		print(solicitudes)
+		return render_template('solicitudes.html', solicitudes=solicitudes)
+	return redirect('/')
 @app.route('/verAmigos')
 def verAmigos():
-	email = request.user.email
-	amigos = library.get_amigos(email)
-	usuario = request.user.username
-	return render_template('verAmigos.html', amigos=amigos, usuario=usuario)
-
+	if 'user' in dir(request) and request.user and request.user.token:
+		email = request.user.email
+		amigos = library.get_amigos(email)
+		usuario = request.user.username
+		return render_template('verAmigos.html', amigos=amigos, usuario=usuario)
+	return redirect('/')
 @app.route('/admin')
 def admin():
 	#Comprobamos si el usuario ha iniciado sesion
