@@ -226,10 +226,11 @@ class LibraryController:
         selectAmigos = db.select("SELECT * from SonAmigos WHERE emailUser1 = ? OR emailuser2 = ?", (email, email))
         amigos = []
         for amistad in selectAmigos:
-            if amistad[0] == email:
-                amigos.append(amistad[1])
-            else:
-                amigos.append(amistad[0])
+            if amistad[1] is not None:
+                if amistad[0] == email:
+                    amigos.append(amistad[1])
+                else:
+                    amigos.append(amistad[0])
         return amigos
 
     def get_nombreuser(self, email):
@@ -240,7 +241,6 @@ class LibraryController:
         selectSolicitudes = db.select("SELECT * from solicita WHERE emailUser2 = ?", (email,))
         listaSolic = []
         for solicitud in selectSolicitudes:
-            print(solicitud[0])
             listaSolic.append(solicitud[0])
         return listaSolic
 
@@ -252,11 +252,10 @@ class LibraryController:
             if not solicitudes:
                 db.insert("INSERT INTO solicita VALUES (?,?)", (emailUsuario, emailObjetivo))
                 bien = True
-        print(f'Lo hace bien', bien)
         return bien
 
     def rechazarSolicitud(self, emailUsuario, emailSolicitud):
-        db.delete("DELETE FROM solicita WHERE emailUser1 = ? AND emailUser2 = ?", (emailUsuario, emailSolicitud))
+        db.delete("DELETE FROM solicita WHERE emailUser1 = ? AND emailUser2 = ?", (emailSolicitud, emailUsuario))
 
     def aceptarSolicitud(self, emailUsuario, emailSolicitud):
         db.insert("INSERT INTO SonAmigos VALUES (?,?)", (emailUsuario, emailSolicitud))

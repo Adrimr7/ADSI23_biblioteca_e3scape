@@ -191,14 +191,12 @@ def solicitudes():
 	if 'user' in dir(request) and request.user and request.user.token:
 		email = request.user.email
 		if request.method == 'POST':
-			emailSolicitud = request.form.get('emailSolicitud', None)
+			emailSolicitud = request.form.get('EmailSolicitud')
 			if 'aceptar' in request.form:
 				library.aceptarSolicitud(email, emailSolicitud)
 			elif 'rechazar' in request.form:
 				library.rechazarSolicitud(email, emailSolicitud)
 		solicitudes = library.getSolicitudes(email)
-		print(email)
-		print(solicitudes)
 		return render_template('solicitudes.html', solicitudes=solicitudes)
 	return redirect('/')
 @app.route('/verAmigos')
