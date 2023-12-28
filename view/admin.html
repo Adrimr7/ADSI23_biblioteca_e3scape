@@ -1,6 +1,95 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container p-5 my-5 border">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>e3scape's library - Formularios</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/bootstrap.bundle.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .form-container {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin: 10px auto;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        button {
+            align-self: flex-start;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: calc(100% - 20px); /* Restar el espacio del padding */
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
     <h1>Admin</h1>
+    <p>Funciones de administrador</p>
+</div>
+<div class="form-container">
+    <form>
+        <h2>Añadir Usuario</h2>
+        <input type="text" placeholder="E-mail">
+        <input type="text" placeholder="Nombre">
+        <input type="text" placeholder="Contraseña">
+        <label for="miCheckbox">¿Es Administrador?:</label>
+        <input type="checkbox" id="miCheckbox" name="miCheckbox" />
+        <button type="button" class="btn btn-primary btn-block mb-4">Añadir usuario</button>
+    </form>
+</div>
+
+<div class="form-container">
+    <form>
+        <h2>Eliminar Usuario</h2>
+        <input type="text" placeholder="Nombre usuario">
+        <button type="button" class="btn btn-primary btn-block mb-4">Eliminar usuario</button>
+    </form>
+</div>
+
+<div class="form-container">
+    <form>
+        <h2>Añadir libro</h2>
+        <input type="text" placeholder="ID">
+        <input type="text" placeholder="Título">
+        <input type="text" placeholder="ID Autor">
+        <input type="text" placeholder="Número de copias">
+        <input type="text" placeholder="Descripcion">
+        <button type="button" class="btn btn-primary btn-block mb-4">Añadir libro</button>
+    </form>
+</div>
+
+</body>
 {% endblock %}
