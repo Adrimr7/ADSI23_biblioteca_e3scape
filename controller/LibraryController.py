@@ -234,8 +234,9 @@ class LibraryController:
         return amigos
 
     def get_nombreuser(self, email):
-        selectNombre = db.select("SELECT name from User WHERE emailUser = ?", (email,))
-        return selectNombre
+        selectNombre = db.select("SELECT name from User WHERE email = ?", (email,))
+        mail = selectNombre[0][0]
+        return mail
 
     def getSolicitudes(self, email):
         selectSolicitudes = db.select("SELECT * from solicita WHERE emailUser2 = ?", (email,))
@@ -260,6 +261,13 @@ class LibraryController:
     def aceptarSolicitud(self, emailUsuario, emailSolicitud):
         db.insert("INSERT INTO SonAmigos VALUES (?,?)", (emailUsuario, emailSolicitud))
         self.rechazarSolicitud(emailUsuario, emailSolicitud)
+
+    def obtenerDatosPerfil(self, emailUsuario):
+        libros = self.__getLibrosLeidos(emailUsuario)
+        if libros is None:
+            libros = []
+        print(self.get_nombreuser(emailUsuario), emailUsuario, libros)
+        return [self.get_nombreuser(emailUsuario), emailUsuario, libros]
 
     def esAdmin(self, email):
         es = db.select("SELECT admin from USER WHERE email = ?", (email,))

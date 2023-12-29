@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+    <h3> Perfil de {{nomUsuario}}</h3>
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="card">
+                <label>Email del usuario:</label>
+                <h5>{{emailUsuario}}</h5>
+                <label>Lista de libros:</label>
+                {% for libro in libros %}
+                <div class="card-body">
+                    <h5 class="card-title">{{libro.title}}</h5>
+                    <p class="card-text">{{libro.description}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    <a href="/verAmigos"><button type="submit" id="botonVerAmigos" class="btn btn-primary">Ver Amigos</button></a>
+    <a href="/amigos"><button type="submit" id="volverMenu" class="btn btn-primary">Volver al menú principal</button></a>
+</div>
+{% endblock %}
