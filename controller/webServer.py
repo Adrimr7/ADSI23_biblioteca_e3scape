@@ -219,17 +219,16 @@ def verPerfil():
 		return render_template('verPerfil.html', nomUsuario = datos[0], emailUsuario = datos[1], libros = datos[2])
 	return redirect('/')
 
-@app.route('/admin')
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
 	#Comprobamos si el usuario ha iniciado sesion
 	if 'user' in dir(request) and request.user and request.user.token:
 		email = request.user.email
-		print("-----")
-		print(email)
 		admin = library.esAdmin(email)
 		if admin:
 				return render_template('admin.html')
-	return redirect("/")
+	else:
+		return redirect("/")
 
 
 @app.route('/login', methods=['GET', 'POST'])
