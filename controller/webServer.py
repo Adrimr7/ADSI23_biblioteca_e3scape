@@ -223,10 +223,30 @@ def verPerfil():
 def admin():
 	#Comprobamos si el usuario ha iniciado sesion
 	if 'user' in dir(request) and request.user and request.user.token:
-		email = request.user.email
-		admin = library.esAdmin(email)
-		if admin:
-				return render_template('admin.html')
+		if request.method == 'POST':
+			#Comprobamos que formulario se ha activado
+			accion1 = request.form.get('accion1') #Registrar usuario
+			accion2 = request.form.get('accion2') #Eliminar usuario
+			accion3 = request.form.get('accion3') #Anadir Libro
+			if accion1 is not None:
+				email = request.form.get('email')
+				nombre = request.form.get('nombre')
+				contrasena = request.form.get('contrasena')
+				admin = request.form.get("admin")
+				completado = library.nuevo_usuario(email, nombre, contrasena, admin)
+			elif accion2 is not None:
+				email = request.form.get('emaile')
+
+			elif accion3 is not None:
+				id = request.form.get('id')
+				titulo = request.form.get('titulo')
+				autor = request.form.get('autor')
+				ncop = request.form.get('ncop')
+				desc = request.form.get('desc')
+	email = request.user.email
+	admin = library.esAdmin(email)
+	if admin:
+			return render_template('admin.html')
 	else:
 		return redirect("/")
 

@@ -1,3 +1,5 @@
+import hashlib
+
 from model import Connection, Book, User, Tema, Resena, Comenta
 from model.tools import hash_password
 import re
@@ -275,3 +277,32 @@ class LibraryController:
             return False
         else:
             return True
+
+    def validar_email(self, email):
+        patron_email = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        regex = re.compile(patron_email)
+        if regex.match(email):
+            return True
+        else:
+            return False
+
+    def nuevo_usuario(self, email, nombre, contrasena, admin):
+        #Comprobamos que los campos esten rellenados y el regex del email
+        if admin == 'on':
+            esUnAdmin = 1
+        else:
+            esUnAdmin = 0
+        if self.validar_email(email):
+            if nombre is not None:
+                if contrasena is not None:
+                    #Comprobar que no hay una persona registrada con ese correo
+                    existe = db.select("SELECT * from USER WHERE email = ?", (email,))
+                    if len(existe) == 0:
+                        #Se añade un nuevo usuario a la bd
+                        salt = "library"
+                        claveSalteada = contrasena + salt
+                        hashed = hashlib.md5(claveSalteada.encode())
+                        claveSalteada = hashed.hexdigest()
+                        db.insert("INSERT INTO USER VALUES (?,?,?,?)", (email,nombre,claveSalteada,esUnAdmin))
+                        return True
+        return False

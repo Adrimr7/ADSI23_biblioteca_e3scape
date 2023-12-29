@@ -17,31 +17,31 @@
     <p>Funciones de administrador</p>
 </div>
 <div class="container p-5 my-5 border">
-    <form>
+    <form method="post">
         <h2>Añadir Usuario</h2>
-        <input type="hidden" name="accion" id="accion1" value="1">
+        <input type="hidden" name="accion1" id="accion1" value="1">
         <input class="col-sm-2 col-form-label" name="email" id="email" type="text" placeholder="E-mail">
         <input class="col-sm-2 col-form-label" name="nombre" id="nombre" type="text" placeholder="Nombre">
         <input class="col-sm-2 col-form-label" name="contrasena" id="contrasena" type="text" placeholder="Contraseña">
         <label class="col-sm-2 col-form-label" id="textoCheck" for="admin">¿Es Administrador?:</label>
         <input class="col-sm-2 col-form-label" type="checkbox" id="admin" name="admin" />
-        <button type="submit" class="btn btn-primary">Añadir usuario </button>
+        <button type="submit" class="btn btn-primary" >Añadir usuario </button>
     </form>
 </div>
 
 <div class="container p-5 my-5 border">
-    <form>
+    <form method="post">
         <h2>Eliminar Usuario</h2>
-        <input type="hidden" name="accion" id="accion2" value="2">
-        <input class="col-sm-2 col-form-label" type="text" placeholder="E-mail">
+        <input type="hidden" name="accion2" id="accion2" value="2">
+        <input class="col-sm-2 col-form-label" name="email" id="emaile" type="text" placeholder="E-mail">
         <button type="submit" class="btn btn-primary">Eliminar usuario</button>
     </form>
 </div>
 
 <div class="container p-5 my-5 border">
-    <form>
+    <form method="post">
         <h2>Añadir libro</h2>
-        <input type="hidden" name="accion" id="accion3" value="3">
+        <input type="hidden" name="accion3" id="accion3" value="3">
         <input class="col-sm-2 col-form-label" type="text" name="id" id="id" placeholder="ID">
         <input class="col-sm-2 col-form-label" type="text" name="titulo" id="titulo" placeholder="Título">
         <input class="col-sm-2 col-form-label" type="text" name="autor" id="autor" placeholder="ID Autor">
