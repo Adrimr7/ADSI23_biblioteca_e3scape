@@ -20,11 +20,11 @@
     <form method="post">
         <h2>Añadir Usuario</h2>
         <input type="hidden" name="accion1" id="accion1" value="1">
-        <input class="col-sm-2 col-form-label" name="email" id="email" type="text" placeholder="E-mail">
-        <input class="col-sm-2 col-form-label" name="nombre" id="nombre" type="text" placeholder="Nombre">
-        <input class="col-sm-2 col-form-label" name="contrasena" id="contrasena" type="text" placeholder="Contraseña">
+        <input class="col-sm-2 col-form-label" name="email" id="email" type="text" placeholder="E-mail" required>
+        <input class="col-sm-2 col-form-label" name="nombre" id="nombre" type="text" placeholder="Nombre" required>
+        <input class="col-sm-2 col-form-label" name="contrasena" id="contrasena" type="text" placeholder="Contraseña" required>
         <label class="col-sm-2 col-form-label" id="textoCheck" for="admin">¿Es Administrador?:</label>
-        <input class="col-sm-2 col-form-label" type="checkbox" id="admin" name="admin" />
+        <input class="col-sm-2 col-form-label" type="checkbox" id="admin" name="admin" required/>
         <button type="submit" class="btn btn-primary" >Añadir usuario </button>
     </form>
 </div>
@@ -33,7 +33,7 @@
     <form method="post">
         <h2>Eliminar Usuario</h2>
         <input type="hidden" name="accion2" id="accion2" value="2">
-        <input class="col-sm-2 col-form-label" name="email" id="emaile" type="text" placeholder="E-mail">
+        <input class="col-sm-2 col-form-label" name="email" id="emaile" type="text" placeholder="E-mail" required>
         <button type="submit" class="btn btn-primary">Eliminar usuario</button>
     </form>
 </div>
@@ -42,11 +42,11 @@
     <form method="post">
         <h2>Añadir libro</h2>
         <input type="hidden" name="accion3" id="accion3" value="3">
-        <input class="col-sm-2 col-form-label" type="text" name="id" id="id" placeholder="ID">
-        <input class="col-sm-2 col-form-label" type="text" name="titulo" id="titulo" placeholder="Título">
-        <input class="col-sm-2 col-form-label" type="text" name="autor" id="autor" placeholder="ID Autor">
-        <input class="col-sm-2 col-form-label" type="text" name="ncop" id="ncop" placeholder="Número de copias">
-        <input class="col-sm-2 col-form-label" type="text" name="desc" id="desc" placeholder="Descripcion">
+        <input class="col-sm-2 col-form-label" type="text" name="titulo" id="titulo" placeholder="Título" required>
+        <input class="col-sm-2 col-form-label" type="text" name="autor" id="autor" placeholder="ID Autor" required>
+        <input class="col-sm-2 col-form-label" type="text" name="ncop" id="ncop" placeholder="Número de copias" required>
+        <input class="col-sm-2 col-form-label" type="text" name="desc" id="desc" placeholder="Descripcion" required>
+        <input class="col-sm-2 col-form-label" type="text" name="portada" id="portada" placeholder="URL portada (Opcional)">
         <button type="submit" class="btn btn-primary">Añadir libro</button>
     </form>
 </div>

@@ -238,11 +238,12 @@ def admin():
 				email = request.form.get('emaile')
 
 			elif accion3 is not None:
-				id = request.form.get('id')
 				titulo = request.form.get('titulo')
 				autor = request.form.get('autor')
 				ncop = request.form.get('ncop')
 				desc = request.form.get('desc')
+				url_portada = request.form.get('portada')
+				completado = library.nuevo_libro(titulo,autor,ncop,desc,url_portada)
 	email = request.user.email
 	admin = library.esAdmin(email)
 	if admin:

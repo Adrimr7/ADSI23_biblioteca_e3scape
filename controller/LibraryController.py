@@ -286,6 +286,10 @@ class LibraryController:
         else:
             return False
 
+    def es_numero(num):
+        patron_numero = re.compile(r'^[-+]?\d*\.?\d+$')
+        return bool(patron_numero.match(num))
+
     def nuevo_usuario(self, email, nombre, contrasena, admin):
         #Comprobamos que los campos esten rellenados y el regex del email
         if admin == 'on':
@@ -306,3 +310,28 @@ class LibraryController:
                         db.insert("INSERT INTO USER VALUES (?,?,?,?)", (email,nombre,claveSalteada,esUnAdmin))
                         return True
         return False
+
+    def nuevo_libro(self,titulo,autor,ncop,desc,portada):
+        #comproinamos que los campos esten rellenados
+        if self.es_numero(ncop):
+            if desc is not None:
+                #comprobaciones de autor
+                existe_au = db.select("SELECT id from AUTHOR WHERE name = ?", (autor))
+                if len(existe_au) < 0:
+                    #Comprobamos que el mismo autor no tenga ya un libro con ese nombre
+                    idAutor = existe_au[0][0]
+                    existe_lib = db.select("SELECT * from BOOK WHERE title = ? AND author = ?", (titulo,idAutor))
+                    #Si ya existe el libro se devuelve false y no se añade nada
+                    if len(existe_lib) < 0:
+                        return False
+                else:
+                    db.insert("INSERT INTO AUTHOR VALUES (?)", (autor))
+                    idAutor = db.select("SELECT id from AUTHOR WHERE name = ?", (autor))
+                #Se añade el libro
+                #No puedo seguir sin la parte de sergio
+                return False
+            return False
+        return False
+
+
+
