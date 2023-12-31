@@ -8,11 +8,11 @@
             <div class="col-lg-4 col-md-6 col-sm-12 my-2">
                 <div class="card d-flex flex-row" style="width: 18rem;">
                     <div class="card-body">
-                        <form class="form-inline" method="POST">
-                        <h5 class="card-title">{{amigo}}</h5>
-                        <input type="hidden" value="{{amigo}}", name="emailAmigo">
-                        <hr class="my-3">
-                        <button type="submit" class="btn btn-primary btn-block mb-4", id="verPerfil", name="verPerfil">Ver Perfil</button>
+                        <form class="form-inline" method="POST" action="/verAmigos">
+                            <h5 class="card-title">{{amigo}}</h5>
+                            <input type="hidden" value="{{amigo}}" name="emailUsuario">
+                            <hr class="my-3">
+                            <button type="submit" class="btn btn-primary btn-block mb-4", id="verPerfil", name="verPerfil">Ver Perfil</button>
                         </form>
                     </div>
                 </div>

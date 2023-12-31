@@ -203,14 +203,14 @@ def solicitudes():
 def verAmigos():
 	if 'user' in dir(request) and request.user and request.user.token:
 		if request.method == 'POST':
-			return redirect(url_for('verPerfil', emailUsuario = request.form.get('emailAmigo')))
+			return redirect(url_for('verPerfil', emailUsuario = request.form.get('emailUsuario')))
 		else:
 			email = request.user.email
 			amigos = library.get_amigos(email)
 			usuario = request.user.username
 			return render_template('verAmigos.html', amigos=amigos, usuario=usuario)
 	return redirect('/')
-@app.route('/verPerfil')
+@app.route('/verPerfil', methods=['GET', 'POST'])
 def verPerfil():
 	if 'user' in dir(request) and request.user and request.user.token:
 		emailUsuario = request.args.get('emailUsuario')
