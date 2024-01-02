@@ -286,7 +286,7 @@ class LibraryController:
         else:
             return False
 
-    def es_numero(num):
+    def es_numero(self,num):
         patron_numero = re.compile(r'^[-+]?\d*\.?\d+$')
         return bool(patron_numero.match(num))
 
@@ -316,19 +316,24 @@ class LibraryController:
         if self.es_numero(ncop):
             if desc is not None:
                 #comprobaciones de autor
-                existe_au = db.select("SELECT id from AUTHOR WHERE name = ?", (autor))
-                if len(existe_au) < 0:
+                existe_au = db.select("SELECT id from AUTHOR WHERE name = ?", (autor,))
+                print(len(existe_au))
+                if len(existe_au) > 0:
+                    print("ENTRAAAAAAAAA")
                     #Comprobamos que el mismo autor no tenga ya un libro con ese nombre
                     idAutor = existe_au[0][0]
-                    existe_lib = db.select("SELECT * from BOOK WHERE title = ? AND author = ?", (titulo,idAutor))
+                    existe_lib = db.select("SELECT * from BOOK WHERE title = ? AND author = ?", (titulo,idAutor,))
                     #Si ya existe el libro se devuelve false y no se añade nada
-                    if len(existe_lib) < 0:
+                    if len(existe_lib) > 0:
+                        #El autor ya tiene un libro con ese nombre -> El libro ya esta en el catalogo
                         return False
                 else:
-                    db.insert("INSERT INTO AUTHOR VALUES (?)", (autor))
-                    idAutor = db.select("SELECT id from AUTHOR WHERE name = ?", (autor))
+                    db.insert("INSERT INTO AUTHOR (name) VALUES (?)", (autor,))
+                    Autor = db.select("SELECT id from AUTHOR WHERE name = ?", (autor,))
+                    idAutor = Autor[0][0]
                 #Se añade el libro
-                #No puedo seguir sin la parte de sergio
+                #AÑADIENDO LIBRO CON LOS CAMPOS ACTUALES (Falta la parte de Sergio)
+                db.insert("INSERT INTO BOOK (title,author,cover,description) VALUES (?,?,?,?)", (titulo,idAutor,portada,desc,))
                 return False
             return False
         return False
