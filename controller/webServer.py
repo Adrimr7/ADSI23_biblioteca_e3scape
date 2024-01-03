@@ -246,7 +246,9 @@ def admin():
                 admin = request.form.get("admin")
                 completado = library.nuevo_usuario(email, nombre, contrasena, admin)
             elif accion2 is not None:
-                email = request.form.get('emaile')
+                emaile = request.form.get('emaile')
+                emailpropio = request.user.email
+                completado = library.eliminar_usuario(emaile,emailpropio)
 
             elif accion3 is not None:
                 titulo = request.form.get('titulo')
@@ -255,12 +257,11 @@ def admin():
                 desc = request.form.get('desc')
                 url_portada = request.form.get('portada')
                 completado = library.nuevo_libro(titulo, autor, ncop, desc, url_portada)
-    email = request.user.email
-    admin = library.esAdmin(email)
-    if admin:
-        return render_template('admin.html')
-    else:
-        return redirect("/")
+        email = request.user.email
+        admin = library.esAdmin(email)
+        if admin:
+            return render_template('admin.html')
+    return redirect("/")
 
 
 @app.route('/login', methods=['GET', 'POST'])
