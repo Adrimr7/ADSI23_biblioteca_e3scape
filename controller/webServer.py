@@ -185,10 +185,8 @@ def amigos():
         if request.method == 'POST':
             emailUsuario = request.user.email
             emailSolicitud = request.form['solicitarAmigo']
-            print(emailSolicitud)
             estaBien = library.enviarSolicitud(emailUsuario, emailSolicitud)
             if estaBien:
-                print(estaBien)
                 return redirect('/amigos')
         return render_template('amigos.html')
     return redirect('/')
