@@ -349,7 +349,17 @@ class LibraryController:
             print(existe[0][0])
             if len(existe) > 0:
                 print("existe")
-                #Si sergio hace su parte aqui hay que eliminar las reservas, antes de eliminar al usuario
+                #Se procede a eliminar tod.o lo relacionado con el usuario en la base de datos
+                #Primero los temas y comentarios
+                db.update("UPDATE Tema SET emailUser = 'deleted@user.com' WHERE emailUser = ?", (emailElim,))
+                db.update("UPDATE Comenta SET emailUser = 'deleted@user.com' WHERE emailUser = ?", (emailElim,))
+                #Eliminamos reseñas
+                db.update("UPDATE Reseña SET emailUser = 'deleted@user.com' WHERE emailUser = ?", (emailElim,))
+                #Eliminamos amigos
+                db.delete("DELETE FROM SonAmigos WHERE emailUser1 = ? OR emailUser2 = ?", (emailElim,emailElim))
+                #eliminamos libros prestados
+                db.delete("DELETE FROM Prestar WHERE emailUser = ?", (emailElim,))
+                #Eliminamos al usuario
                 db.delete("DELETE FROM user WHERE email = ?", (emailElim,))
                 return True
             return False

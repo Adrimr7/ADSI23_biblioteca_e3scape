@@ -29,6 +29,12 @@
       "email": "admin@gmail.com",
       "password": "admin",
       "admin": true
+    },
+    {
+      "nombres": "Usuario Eliminado",
+      "email": "deleted@user.com",
+      "password": "a1sd11io*hjgwe*ngodh2goño__nef4jsdfneij3lksdn^^mfsdhfe",
+      "admin": false
     }
   ]
 }
