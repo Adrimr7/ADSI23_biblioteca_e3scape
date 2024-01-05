@@ -339,16 +339,11 @@ class LibraryController:
     def eliminar_usuario(self,emailElim,emailProp):
         #Comprobamos que un admin no se este eliminando a si mismo
         if emailElim == emailProp:
-            print("coincide")
             return False
         else:
-            print("no coincide")
-            print(emailElim)
             #Comprobamos que existe la persona que se va a eliminar
             existe = db.select("SELECT * FROM User WHERE email = ?", (emailElim,))
-            print(existe[0][0])
             if len(existe) > 0:
-                print("existe")
                 #Se procede a eliminar tod.o lo relacionado con el usuario en la base de datos
                 #Primero los temas y comentarios
                 db.update("UPDATE Tema SET emailUser = 'deleted@user.com' WHERE emailUser = ?", (emailElim,))
