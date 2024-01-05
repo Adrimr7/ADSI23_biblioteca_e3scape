@@ -86,6 +86,134 @@ class TestAdmin(BaseTestClass):
         #La cuenta no se añade porque el correo no cumple el estandar (Falta el @ y el .com,.es...)
         self.assertEqual(len(res), 0)
 
+    def testEliminarUsuario(self):
+        #Pre: Eliminamos un usuario existente 8afc382a91e7bc1703abe0dd0d560b2a
+        #Post: Se elimina de la base de datos, asi como sus temas, comentarios y libros reservados
+        self.login('admin@gmail.com', 'admin')
+        self.client.get('/admin')
+        #Limpiamos tod.o
+        cur.execute(f"""DELETE FROM User WHERE email = 'test@test.com' """)
+        con.commit()
+        cur.execute(f"""DELETE FROM Tema""")
+        con.commit()
+        cur.execute(f"""DELETE FROM Comenta""")
+        con.commit()
+        cur.execute(f"""DELETE FROM Prestar""")
+        con.commit()
+        #Añadimos al usuario
+        cur.execute(f"""INSERT INTO User VALUES ('test@test.com','test','8afc382a91e7bc1703abe0dd0d560b2a',0) """)
+        con.commit()
+        #Le asociamos la creacion de un tema
+        cur.execute(f"""INSERT INTO Tema VALUES ('10', 'TemaTest', 'test@test.com', 'En efecto, esto es un test')""")
+        con.commit()
+        #Le asociamos un comentario
+        cur.execute(f"""INSERT INTO Comenta VALUES ('test@test.com', 10, 'Comentario', '2023-12-09 10:30:24')""")
+        con.commit()
+        #Le damos una reserva concluida
+        cur.execute(f"""INSERT INTO Prestar VALUES ('test@test.com', 2, '2023-11-23 12:00:57', '')""")
+        con.commit()
+        #Y una reserva activa
+        cur.execute(f"""INSERT INTO Prestar VALUES ('test@test.com', 10, '2023-11-23 12:00:57', '2023-11-27 12:00:57')""")
+        con.commit()
+
+        #COMPROBACIONES ANTES DEL BORRADO
+        cur.execute(f"""SELECT * FROM User WHERE email = 'test@test.com' """)
+        con.commit()
+        res = cur.fetchall()
+        # El usuario ya no existe
+        self.assertEqual(len(res), 1)
+
+        cur.execute(f"""SELECT emailUser FROM Tema WHERE id = 10 """)
+        con.commit()
+        res = cur.fetchall()
+        # El autor de los temas ahora es Usuario eliminado con email deleted@user.com
+        self.assertEqual(res[0][0], "test@test.com")
+
+        cur.execute(f"""SELECT emailUser FROM Comenta WHERE idTema = 10 """)
+        con.commit()
+        res = cur.fetchall()
+        # El autor de los Comentarios ahora es Usuario eliminado con email deleted@user.com
+        self.assertEqual(res[0][0], "test@test.com")
+
+        # Las dos reservas estan eliminadas
+        cur.execute(f"""SELECT * FROM Prestar WHERE emailUser = 'test@test.com' """)
+        con.commit()
+        res = cur.fetchall()
+        self.assertEqual(len(res), 2)
+
+        cur.execute(f"""SELECT * FROM Prestar WHERE emailUser = 'test@test.com' """)
+        con.commit()
+        res = cur.fetchall()
+        self.assertEqual(len(res), 2)
+
+        #Realizamos la eliminacion
+        self.client.post('/admin', data=dict(accion2=2, emaile='test@test.com'), follow_redirects=True)
+
+        cur.execute(f"""SELECT * FROM User WHERE email = 'test@test.com' """)
+        con.commit()
+        res = cur.fetchall()
+        #El usuario ya no existe
+        self.assertEqual(len(res),0)
+
+        cur.execute(f"""SELECT emailUser FROM Tema WHERE id = '10' """)
+        con.commit()
+        res = cur.fetchall()
+        #El autor de los temas ahora es Usuario eliminado con email deleted@user.com
+        self.assertEqual(res[0][0],"deleted@user.com")
+
+        cur.execute(f"""SELECT emailUser FROM Comenta WHERE idTema = '10' """)
+        con.commit()
+        res = cur.fetchall()
+        #El autor de los Comentarios ahora es Usuario eliminado con email deleted@user.com
+        self.assertEqual(res[0][0],"deleted@user.com")
+
+        #Las dos reservas estan eliminadas
+        cur.execute(f"""SELECT * FROM Prestar WHERE emailUser = 'test@test.com' """)
+        con.commit()
+        res = cur.fetchall()
+        self.assertEqual(len(res),0)
+
+        cur.execute(f"""SELECT * FROM Prestar WHERE emailUser = 'test@test.com' """)
+        con.commit()
+        res = cur.fetchall()
+        self.assertEqual(len(res),0)
+
+    def eliminarseUnoMismo(self):
+        #Pre: El admin intenta eliminarse a si mismo
+        #Post: No se elimina la cuenta
+        self.login('admin@gmail.com', 'admin')
+        self.client.get('/admin')
+        self.client.post('/admin', data=dict(accion2=2, emaile='admin@gmail.com'), follow_redirects=True)
+
+        cur.execute(f"""SELECT * FROM Usuario WHERE emailUser = 'admin@gmail.com' """)
+        con.commit()
+        res=cur.fetchall()
+        #El admin sigue existiendo
+        self.assertEqual(res[0][0], 'admin@gmail.com')
+
+    def eliminarCuentaInexistente(self):
+        #Pre: Se intenta eliminar una cuenta que no existe
+        #Post: No ocurre nada, porque la cuenta no existe
+        self.login('admin@gmail.com', 'admin')
+        self.client.get('/admin')
+
+        cur.execute(f"""SELECT * FROM Usuario WHERE emailUser = 'cuentainventada@gmail.com' """)
+        con.commit()
+        res=cur.fetchall()
+        #El admin sigue existiendo
+        self.assertEqual(len(res), 0)
+
+        self.client.post('/admin', data=dict(accion2=2, emaile='cuentainventada@gmail.com'), follow_redirects=True)
+
+        cur.execute(f"""SELECT * FROM Usuario WHERE emailUser = 'cuentainventada@gmail.com' """)
+        con.commit()
+        res=cur.fetchall()
+        #El admin sigue existiendo
+        self.assertEqual(len(res), 0)
+
+    #---------------------------------
+    #-------Más casos de prueba-------
+    #---------------------------------
     def testAnadirLibroConAutorInexistente(self):
         #Pre: Intentaremos añadir un libro con un nombre de autor que no existe
         #Post: Añade el libro y el autor
