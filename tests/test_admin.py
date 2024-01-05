@@ -157,7 +157,7 @@ class TestAdmin(BaseTestClass):
         self.assertEqual(len(res), 1)
 
     def testAnadirLibroRellenandoNumeroCopiasMal(self):
-        #Pre: Introducimos letras por ejemplo en el campo de numero de copias.
+        #Pre: Introducimos letras por ejemplo en el campo de numero de copias
         #Post: No se añade el libro
         self.login('admin@gmail.com', 'admin')
         self.client.get('/admin')
