@@ -178,26 +178,26 @@ class TestAdmin(BaseTestClass):
         res = cur.fetchall()
         self.assertEqual(len(res),0)
 
-    def eliminarseUnoMismo(self):
+    def testEliminarseUnoMismo(self):
         #Pre: El admin intenta eliminarse a si mismo
         #Post: No se elimina la cuenta
         self.login('admin@gmail.com', 'admin')
         self.client.get('/admin')
         self.client.post('/admin', data=dict(accion2=2, emaile='admin@gmail.com'), follow_redirects=True)
 
-        cur.execute(f"""SELECT * FROM Usuario WHERE emailUser = 'admin@gmail.com' """)
+        cur.execute(f"""SELECT * FROM User WHERE email = 'admin@gmail.com' """)
         con.commit()
         res=cur.fetchall()
         #El admin sigue existiendo
         self.assertEqual(res[0][0], 'admin@gmail.com')
 
-    def eliminarCuentaInexistente(self):
+    def testEliminarCuentaInexistente(self):
         #Pre: Se intenta eliminar una cuenta que no existe
         #Post: No ocurre nada, porque la cuenta no existe
         self.login('admin@gmail.com', 'admin')
         self.client.get('/admin')
 
-        cur.execute(f"""SELECT * FROM Usuario WHERE emailUser = 'cuentainventada@gmail.com' """)
+        cur.execute(f"""SELECT * FROM User WHERE email = 'cuentainventada@gmail.com' """)
         con.commit()
         res=cur.fetchall()
         #El admin sigue existiendo
@@ -205,15 +205,13 @@ class TestAdmin(BaseTestClass):
 
         self.client.post('/admin', data=dict(accion2=2, emaile='cuentainventada@gmail.com'), follow_redirects=True)
 
-        cur.execute(f"""SELECT * FROM Usuario WHERE emailUser = 'cuentainventada@gmail.com' """)
+        cur.execute(f"""SELECT * FROM User WHERE email = 'cuentainventada@gmail.com' """)
         con.commit()
         res=cur.fetchall()
         #El admin sigue existiendo
         self.assertEqual(len(res), 0)
 
-    #---------------------------------
-    #-------Más casos de prueba-------
-    #---------------------------------
+
     def testAnadirLibroConAutorInexistente(self):
         #Pre: Intentaremos añadir un libro con un nombre de autor que no existe
         #Post: Añade el libro y el autor
