@@ -48,13 +48,22 @@ def catalogue():
                            total_pages=total_pages, max=max, min=min)
 
 
-@app.route('/book')
+@app.route('/book', methods=['GET','POST'])
 def book():
     id = request.values.get("id", "")
     book = library.get_book(id)
-    prestado = library.isOnLoan(request.user.email, id)
-    print(prestado)
-    return render_template('book.html', book=book, prestado=prestado)
+    prestado = None
+    recien = False
+    if 'user' in dir(request) and request.user and request.user.token:
+        prestado = library.isOnLoan(request.user.email, id)
+        if 'reservar' in request.form:
+            library.reservarLibro(request.user.email, id)
+            prestado=True
+        if 'devolver' in request.form or library.seHaAcabadoElTiempo(request.user.email, id):
+            library.devolverLibro(request.user.email, id)
+            recien = True
+            prestado=False
+    return render_template('book.html', book=book, prestado=prestado, recien=recien)
 
 
 @app.route('/forum')
@@ -262,6 +271,12 @@ def admin():
         if admin:
             return render_template('admin.html')
     return redirect("/")
+
+@app.route('/reserva')
+def reserva():
+    datos = library.getReserva(request.user.email)
+
+    return render_template('reserva.html', reservas=datos)
 
 
 @app.route('/login', methods=['GET', 'POST'])

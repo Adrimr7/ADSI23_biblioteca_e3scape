@@ -2,6 +2,8 @@ import hashlib
 
 from model import Connection, Book, User, Tema, Resena, Comenta
 from model.tools import hash_password
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import re
 
 db = Connection()
@@ -204,7 +206,7 @@ class LibraryController:
         return users
 
     def isOnLoan(self, email, id):
-        res = db.select("SELECT * FROM Prestar WHERE emailUser LIKE ? AND idLibro = ? AND fechaFin =''", (email, id,))
+        res = db.select("SELECT * FROM Prestar WHERE emailUser LIKE ? AND idLibro = ? AND fechaFin IS NULL", (email, id,))
         if len(res) > 0:
             return True
         else:
@@ -358,3 +360,33 @@ class LibraryController:
                 db.delete("DELETE FROM user WHERE email = ?", (emailElim,))
                 return True
             return False
+
+    def reservarLibro(self, emailUsuario, id):
+        fecha_actual = datetime.now()
+        fechaHFin = fecha_actual + relativedelta(months=2)
+        fechaHFinal = fechaHFin.strftime('%Y-%m-%d %H:%M:%S')
+        db.insert("INSERT INTO Prestar (emailUser, idLibro, fechaHora, fechaFin) VALUES (?, ?, ?, NULL)", (emailUsuario, id, fechaHFinal))
+
+    def devolverLibro(self, emailUsuario, id):
+        fechaDevuelto = datetime.now().strftime('%Y-%m-%d')
+        fecha = db.select("SELECT fechaHora FROM Prestar WHERE emailUser LIKE ? AND idLibro = ? AND fechaFin IS NULL", (emailUsuario, id))
+        fechaS = fecha[0][0]
+        db.update("UPDATE Prestar SET fechaFin = ? WHERE idLibro = ? AND emailUser = ? AND fechaHora = ?", (fechaDevuelto, id, emailUsuario, fechaS))
+        res=db.select("SELECT * FROM Prestar WHERE idLibro = ? AND emailUser = ? AND fechaHora = ? AND FechaFin IS NOT NULL", (id, emailUsuario, fechaS))
+    def getReserva(self, emailUsuario):
+        res = db.select("SELECT Prestar.fechaFin, Book.title, Author.name, Book.id, Prestar.fechaHora FROM Prestar INNER JOIN Book ON Prestar.idLibro = Book.id INNER JOIN Author ON Book.author = Author.id WHERE Prestar.emailUser LIKE ?", (emailUsuario,))
+        if res is None:
+            return[]
+        return res
+
+    def seHaAcabadoElTiempo(self, email, id):
+        fechaDevuelto = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        fecha = db.select("SELECT fechaHora FROM Prestar WHERE emailUser LIKE ? AND idLibro = ? AND fechaFin IS NULL", (email, id))
+        acabado=False
+        if len(fecha) > 0:
+            fechaS = fecha[0][0]
+            if fechaDevuelto >= fechaS:
+                acabado=True
+            else:
+                acabado=False
+        return acabado

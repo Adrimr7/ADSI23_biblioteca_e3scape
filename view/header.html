@@ -24,6 +24,7 @@
           {% if 'user' in request.__dict__ and request.user and request.user.token %}
               <li class="nav-item"><a href="/amigos" class="nav-link {% if request.path == '/amigos' %}active{% endif %}">Amigos</a></li>
               <li class="nav-item"><a href="/resenas" class="nav-link {% if request.path == '/resenas' %}active{% endif %}">Reseñas</a></li>
+              <li class="nav-item"><a href="/reserva" class="nav-link {% if request.path == '/reserva' %}active{% endif %}">Reservas</a></li>
               {% if request.user.admin %}
                 <li class="nav-item"><a href="/admin" class="nav-link {% if request.path == '/admin' %}active{% endif %}">Admin</a></li>
               {% endif %}
