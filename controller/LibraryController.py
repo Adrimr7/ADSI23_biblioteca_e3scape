@@ -2,6 +2,7 @@ import hashlib
 
 from model import Connection, Book, User, Tema, Resena, Comenta
 from model.tools import hash_password
+print("si da error: pip install python-dateutil")
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import re
@@ -372,7 +373,6 @@ class LibraryController:
         fecha = db.select("SELECT fechaHora FROM Prestar WHERE emailUser LIKE ? AND idLibro = ? AND fechaFin IS NULL", (emailUsuario, id))
         fechaS = fecha[0][0]
         db.update("UPDATE Prestar SET fechaFin = ? WHERE idLibro = ? AND emailUser = ? AND fechaHora = ?", (fechaDevuelto, id, emailUsuario, fechaS))
-        res=db.select("SELECT * FROM Prestar WHERE idLibro = ? AND emailUser = ? AND fechaHora = ? AND FechaFin IS NOT NULL", (id, emailUsuario, fechaS))
     def getReserva(self, emailUsuario):
         res = db.select("SELECT Prestar.fechaFin, Book.title, Author.name, Book.id, Prestar.fechaHora FROM Prestar INNER JOIN Book ON Prestar.idLibro = Book.id INNER JOIN Author ON Book.author = Author.id WHERE Prestar.emailUser LIKE ?", (emailUsuario,))
         if res is None:
