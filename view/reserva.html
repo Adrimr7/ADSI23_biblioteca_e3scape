@@ -12,6 +12,7 @@
                             <p class="card-text">Título: {{ reserva[1]}}</p>
                             {% if reserva[0] %}
                             <p class="card-title">Fecha devuelta: {{ reserva[0]}}</p>
+                            <a href="/editarResena"><button type="submit" id="editResena" class="btn btn-primary">Hacer o cambiar reseña</button></a>
                             {% else %}
                             <p class="card-text">Fecha a devolver: {{ reserva[4]}}</p>
                             {% endif %}
