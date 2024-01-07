@@ -127,7 +127,7 @@ def editarResena():
                 resena = library.getResena(id, request.user.email).resena
             valoracion = request.form['valoracion']
             try:
-                float(valoracion)
+                valoracion = float(valoracion)
             except (ValueError, TypeError):
                 valoracion = -1
 
