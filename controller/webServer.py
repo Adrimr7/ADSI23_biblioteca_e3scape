@@ -17,7 +17,6 @@ def get_logged_user():
             if request.user:
                 request.user.token = token
 
-
 @app.after_request
 def add_cookies(response):
     if 'user' in dir(request) and request.user and request.user.token:
@@ -25,7 +24,6 @@ def add_cookies(response):
         response.set_cookie('token', session.hash)
         response.set_cookie('time', str(session.time))
     return response
-
 
 @app.route('/')
 def index():
@@ -36,7 +34,6 @@ def index():
     else:
         return render_template('index.html')
 
-
 @app.route('/catalogue')
 def catalogue():
     title = request.values.get("title", "")
@@ -46,7 +43,6 @@ def catalogue():
     total_pages = (nb_books // 6) + 1
     return render_template('catalogue.html', books=books, title=title, author=author, current_page=page,
                            total_pages=total_pages, max=max, min=min)
-
 
 @app.route('/book', methods=['GET','POST'])
 def book():
@@ -65,12 +61,10 @@ def book():
             prestado=False
     return render_template('book.html', book=book, prestado=prestado, recien=recien)
 
-
 @app.route('/forum')
 def forum():
     temas = library.get_temas()
     return render_template('forum.html', temas=temas)
-
 
 @app.route('/tema')
 def tema():
@@ -86,7 +80,6 @@ def tema():
         return render_template('tema.html', comentarios=comentarios, tema=tema)
     return redirect('/forum')
 
-
 @app.route('/nuevoTema', methods=['GET', 'POST'])
 def nuevoTema():
     if 'user' in dir(request) and request.user and request.user.token:
@@ -101,7 +94,6 @@ def nuevoTema():
         return render_template('nuevoTema.html', )
     return redirect('/')
 
-
 @app.route('/nuevoComentario', methods=['GET', 'POST'])
 def nuevoComentario():
     if 'user' in dir(request) and request.user and request.user.token:
@@ -115,7 +107,6 @@ def nuevoComentario():
             return redirect('/forum')
         return render_template('nuevoComentario.html', )
     return redirect('/')
-
 
 @app.route('/editarResena', methods=['GET', 'POST'])
 def editarResena():
@@ -145,31 +136,6 @@ def editarResena():
         return render_template('editarResena.html', )
     return redirect('/')
 
-
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#	if 'user' in dir(request) and request.user and request.user.token:
-#		return redirect('/')
-#	email = request.values.get("email", "")
-#	print(email)
-#	password = request.values.get("password", "")
-#	print(password)
-#	user = library.get_user(email, password)
-#	print(user)
-#	if user:
-#		print(user.email)
-#		print("MailLogin")
-#		session = user.new_session()
-#		resp = redirect("/")
-#		resp.set_cookie('token', session.hash)
-#		resp.set_cookie('time', str(session.time))
-#	else:
-#		if request.method == 'POST':
-#			return redirect('/login')
-#		else:
-#			resp = render_template('login.html')
-#	return resp
-
 @app.route('/resena')
 def resena():
     if 'user' in dir(request) and request.user and request.user.token:
@@ -178,7 +144,6 @@ def resena():
         return render_template('resena.html', resena=resena)
     return redirect("/")
 
-
 @app.route('/resenas')
 def resenas():
     if 'user' in dir(request) and request.user and request.user.token:
@@ -186,7 +151,6 @@ def resenas():
         resenas = library.get_resenas(email)
         return render_template('resenas.html', resenas=resenas)
     return redirect("/")
-
 
 @app.route('/amigos', methods=['GET', 'POST'])
 def amigos():
@@ -199,7 +163,6 @@ def amigos():
                 return redirect('/amigos')
         return render_template('amigos.html')
     return redirect('/')
-
 
 @app.route('/solicitudes', methods=['GET', 'POST'])
 def solicitudes():
@@ -215,7 +178,6 @@ def solicitudes():
         return render_template('solicitudes.html', solicitudes=solicitudes)
     return redirect('/')
 
-
 @app.route('/verAmigos', methods=['GET', 'POST'])
 def verAmigos():
     if 'user' in dir(request) and request.user and request.user.token:
@@ -228,7 +190,6 @@ def verAmigos():
             return render_template('verAmigos.html', amigos=amigos, usuario=usuario)
     return redirect('/')
 
-
 @app.route('/verPerfil', methods=['GET', 'POST'])
 def verPerfil():
     if 'user' in dir(request) and request.user and request.user.token:
@@ -237,7 +198,6 @@ def verPerfil():
         datos = library.obtenerDatosPerfil(emailUsuario)
         return render_template('verPerfil.html', nomUsuario=datos[0], emailUsuario=datos[1], libros=datos[2])
     return redirect('/')
-
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
@@ -275,22 +235,16 @@ def admin():
 @app.route('/reserva')
 def reserva():
     datos = library.getReserva(request.user.email)
-
     return render_template('reserva.html', reservas=datos)
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'user' in dir(request) and request.user and request.user.token:
         return redirect('/')
     email = request.values.get("email", "")
-    # print(email)
     password = request.values.get("password", "")
-    # print(password)
     user = library.get_user(email, password)
-    # print(user)
     if user:
-        # print(user.email)
         session = user.new_session()
         resp = redirect("/")
         resp.set_cookie('token', session.hash)
@@ -301,7 +255,6 @@ def login():
         else:
             resp = render_template('login.html')
     return resp
-
 
 @app.route('/logout')
 def logout():

@@ -2,9 +2,7 @@ import hashlib
 
 from model import Connection, Book, User, Tema, Resena, Comenta
 from model.tools import hash_password
-print("si da error: pip install python-dateutil")
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
+from datetime import datetime, timedelta
 import re
 
 db = Connection()
@@ -315,7 +313,7 @@ class LibraryController:
         return False
 
     def nuevo_libro(self,titulo,autor,ncop,desc,portada):
-        #comproinamos que los campos esten rellenados
+        #comprobamos que los campos esten rellenados
         if self.es_numero(ncop):
             if desc is not None:
                 #comprobaciones de autor
@@ -333,7 +331,7 @@ class LibraryController:
                     Autor = db.select("SELECT id from AUTHOR WHERE name = ?", (autor,))
                     idAutor = Autor[0][0]
                 #Se añade el libro
-                #AÑADIENDO LIBRO CON LOS CAMPOS ACTUALES (Falta la parte de Sergio)
+                #AÑADIENDO LIBRO CON LOS CAMPOS ACTUALES
                 db.insert("INSERT INTO BOOK (title,author,cover,description) VALUES (?,?,?,?)", (titulo,idAutor,portada,desc,))
                 return False
             return False
@@ -364,7 +362,7 @@ class LibraryController:
 
     def reservarLibro(self, emailUsuario, id):
         fecha_actual = datetime.now()
-        fechaHFin = fecha_actual + relativedelta(months=2)
+        fechaHFin = fecha_actual + timedelta(days=60)
         fechaHFinal = fechaHFin.strftime('%Y-%m-%d %H:%M:%S')
         db.insert("INSERT INTO Prestar (emailUser, idLibro, fechaHora, fechaFin) VALUES (?, ?, ?, NULL)", (emailUsuario, id, fechaHFinal))
 
