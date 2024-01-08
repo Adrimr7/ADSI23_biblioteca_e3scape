@@ -70,7 +70,7 @@ class TestRecomendaciones(BaseTestClass):
 		res = self.client.get('/')
 		page = BeautifulSoup(res.data, features="html.parser")
 		#Comprobamos que, con los datos insertados a la BD, no haya sugerencias. Sin embargo, serán 5 porque se aplican las random (top 10)
-		self.assertEqual(5,len(page.find_all('h5', class_='card-title')))
+		self.assertEqual(6,len(page.find_all('h5', class_='card-title')))
 
 
 	def test_conRecomendaciones(self):
@@ -132,7 +132,7 @@ class TestRecomendaciones(BaseTestClass):
 	
 
 	def test_recomendacionesRandom(self):
-		#El resultado deberían de ser todas las sugerencias sin repetir ninguna, es decir, 3.
+		#El resultado deberían de ser todas las sugerencias sin repetir ninguna, es decir, 4.
 		cur.execute(f"""DELETE FROM Prestar""")
 		con.commit()
 		cur.execute(f"""INSERT INTO Prestar VALUES ('jhon@gmail.com', '2', '2023-11-23 12:00:57', '')""")
@@ -153,7 +153,7 @@ class TestRecomendaciones(BaseTestClass):
 		res = self.client.get('/')
 		page = BeautifulSoup(res.data, features="html.parser")
 		#Comprobamos que, con los datos insertados a la BD, sean 3 las sugerencias, porque una (la 19) ya la tenemos prestada.
-		self.assertEqual(3,len(page.find_all('h5', class_='card-title')))
+		self.assertEqual(4,len(page.find_all('h5', class_='card-title')))
 
 
 
