@@ -69,10 +69,25 @@ class TestReserva(BaseTestClass):
 		resultados = self.db.select(f"""SELECT * FROM Prestar WHERE idLibro = '4' AND emailUser = 'jhon@gmail.com' AND fechaHora = '2022-04-13 15:00:57' AND fechaFin IS NOT NULL""")
 		self.assertEqual(4, len(resultados[0]))
 
-	def test_IntentarHacerOEditarReseñaTrasDevolverLibro(self):
+	def test_editarReseñaTrasDevolverLibro(self):
 		cur.execute(f"""DELETE FROM Prestar""")
 		con.commit()
 		cur.execute(f"""INSERT INTO Prestar VALUES ('jhon@gmail.com', '4', '2022-04-13 15:00:57', NULL)""")
+		con.commit()
+		self.login('jhon@gmail.com', '123')
+		res = self.client.get('/book?id=4')
+		page = BeautifulSoup(res.data, features="html.parser")
+		#Debería de haberse devuelto al haber comparado las fechas
+		self.assertEqual(1, len(page.find_all('button', attrs={"id": "editResena"})))
+
+	def test_IntentarHacerReseñaTrasDevolverLibroYTenerReseñaCreada(self):
+		cur.execute(f"""DELETE FROM Prestar""")
+		con.commit()
+		cur.execute(f"""DELETE FROM Reseña""")
+		con.commit()
+		cur.execute(f"""INSERT INTO Prestar VALUES ('jhon@gmail.com', '4', '2022-04-13 15:00:57', NULL)""")
+		con.commit()
+		cur.execute(f"""INSERT INTO Reseña VALUES ('jhon@gmail.com', '4', 'muy chulo', '4')""")
 		con.commit()
 		self.login('jhon@gmail.com', '123')
 		res = self.client.get('/book?id=4')

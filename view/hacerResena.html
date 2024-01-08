@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+
+<form class="form-inline" method="POST">
+
+  <div class="input-group mb-2 mr-sm-2">
+      <label class="col-sm-2 col-form-label" for="resenaH">Reseña</label>
+      <input type="text" id="resenaH" name="resenaH" class="form-control mb-2" />
+  </div>
+  <div class="input-group mb-2 mr-sm-2">
+      <label class="col-sm-2 col-form-label" for="valoracionH">Valoración</label>
+      <input type="number" id="valoracionH" name="valoracionH" class="form-control mb-2" />
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary btn-block mb-4">Publicar</button>
+
+</form>
+
+</div>
+{% endblock %}

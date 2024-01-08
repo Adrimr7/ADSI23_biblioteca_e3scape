@@ -32,7 +32,11 @@
             </form>
         {% endif %}
         {% if recien == True: %}
-            <a href="/editarResena"><button type="submit" id="editResena" class="btn btn-primary">Hacer o cambiar reseña</button></a>
+            {% if existe == True: %}
+            <a href="/editarResena?id={{book.id}}"><button type="submit" id="editResena" class="btn btn-primary">Cambiar reseña</button></a>
+            {% else %}
+            <a href="/hacerResena?id={{book.id}}"><button type="submit" id="hacerResena" class="btn btn-primary">Hacer reseña</button></a>
+            {% endif %}
         {% endif %}
     </div>
 

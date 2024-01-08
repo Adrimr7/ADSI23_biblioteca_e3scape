@@ -313,7 +313,7 @@ class LibraryController:
         return False
 
     def nuevo_libro(self,titulo,autor,ncop,desc,portada):
-        #comprobamos que los campos esten rellenados
+        #comproinamos que los campos esten rellenados
         if self.es_numero(ncop):
             if desc is not None:
                 #comprobaciones de autor
@@ -331,7 +331,7 @@ class LibraryController:
                     Autor = db.select("SELECT id from AUTHOR WHERE name = ?", (autor,))
                     idAutor = Autor[0][0]
                 #Se añade el libro
-                #AÑADIENDO LIBRO CON LOS CAMPOS ACTUALES
+                #AÑADIENDO LIBRO CON LOS CAMPOS ACTUALES (Falta la parte de Sergio)
                 db.insert("INSERT INTO BOOK (title,author,cover,description) VALUES (?,?,?,?)", (titulo,idAutor,portada,desc,))
                 return False
             return False
@@ -373,8 +373,13 @@ class LibraryController:
         db.update("UPDATE Prestar SET fechaFin = ? WHERE idLibro = ? AND emailUser = ? AND fechaHora = ?", (fechaDevuelto, id, emailUsuario, fechaS))
     def getReserva(self, emailUsuario):
         res = db.select("SELECT Prestar.fechaFin, Book.title, Author.name, Book.id, Prestar.fechaHora FROM Prestar INNER JOIN Book ON Prestar.idLibro = Book.id INNER JOIN Author ON Book.author = Author.id WHERE Prestar.emailUser LIKE ?", (emailUsuario,))
-        if res is None:
-            return[]
+        for i,re in enumerate(res):
+            n = db.select("SELECT * FROM Reseña WHERE idLibro = ? AND emailUser = ?", (re[3], emailUsuario))
+            if n is None or len(n)==0:
+                existe=False
+            else:
+                existe=True
+            res[i]=re + (n,)
         return res
 
     def seHaAcabadoElTiempo(self, email, id):
@@ -388,3 +393,13 @@ class LibraryController:
             else:
                 acabado=False
         return acabado
+
+    def existeResena(self, idLibro, email):
+        existe=True
+        n = db.select("SELECT * FROM Reseña WHERE idLibro = ? AND emailUser = ?", (idLibro, email))
+        if n is None or len(n)==0:
+            existe=False
+        return existe
+
+    def hacerResena(self, resena, email, id, valoracion):
+        db.insert("INSERT INTO Reseña (emailUser,idLibro,resena,valoracion) VALUES(?,?,?,?)", (email, id, resena, valoracion))
